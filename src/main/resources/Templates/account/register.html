@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Księgania</h1>
+<h2>Formularz rejestracji</h2>
+<form th:action="@{/account/register}" method="POST">
+    <div>
+        <input type="text" id="username" name="username" placeholder="Nazwa użytkownika" required>
+    </div>
+    <div>
+        <input type="password" id="password" name="password" placeholder="Hasło" required pattern="^[A-Za-z\d@$!%*?&]{8,}$">
+    </div>
+    <div>
+        <input type="password" id="rpassword" name="rpassword" placeholder="Powtórz hasło" required>
+    </div>
+    <div th:if="${error}" style="color: red" th:text="${error}"></div>
+    <div>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+    </div>
+    <div>
+        <input type="text" id="phone" name="phone" placeholder="Nr. telefonu" required pattern="\d{9}">
+    </div>
+
+        <input type="checkbox" id="administratorCheckbox" name="administratorCheckbox"
+               onchange="toogleInput() ">
+
+    <label for="administratorCheckbox">Zaznacz jeśli jesteś administratorem.</label>
+    <div>
+        <input type="password" id="admin-password" name="admin-password"
+               placeholder="Hasło administratora"
+               pattern="^[1][2][3][4][5][6][7]$">
+    </div>
+    <button type="submit">Zarejestruj</button>
+</form>
+</body>
+</html>
+<script>
+    function toogleInput(){
+        const checkbox = document.getElementById('administratorCheckbox');
+        var administrator = document.getElementById('admin-password');
+        if (checkbox.checked) {
+            administrator.style.display = 'block';
+        } else {
+            administrator.style.display = 'none';
+        }
+    }
+</script>
+<style>
+    #admin-password{
+        display : none;
+    }
+</style>

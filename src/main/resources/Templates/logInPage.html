@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LogInPage</title>
+</head>
+<body>
+    <form method="post" action="/login">
+        <h1>Księgania</h1>
+        <h2>Formularz logowania</h2>
+        <div>
+            <div>
+                 <input type="text" id="username" name="username" placeholder="Nazwa użytkownika">
+            </div>
+            <div>
+                <input type="password" id="password" name="password" placeholder="Hasło">
+            </div>
+            <p><input type="checkbox" id="remember-me" name="remember-me">
+                <label for="remember-me">Zapamiętaj</label>
+            </p>
+            <button type="submit">Zaloguj</button>
+        </div>
+    </form>
+    <div>
+        <p>Jeśli nie posiadasz jeszcze konta możesz przejść do <a href="/account/register">ZAREJESTRUJ.</a></p>
+        <p>Jeśli nie pamiętasz hasła możesz przejść do <a href="/account/changePassword">ZMIEŃ HASŁO.</a></p>
+    </div>
+</body>
+</html>
+<style>
+</style>

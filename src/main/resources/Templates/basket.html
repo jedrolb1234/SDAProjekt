@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Basket</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Satisfy">
+</head>
+<body>
+<header>
+  <h1 class="logo">Paddington</h1>
+  <form class="searchForm">
+    <input type="text" class="searchInput" placeholder="Szukaj">
+    <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
+  </form>
+
+  <form class="logFormButton"><button class ="logInButton" href="logInPage">zaloguj się</button></form>
+  <span class="material-symbols-outlined">shopping_cart</span>
+  <p class="shoppingBasket">0</p>
+  <p class="actualPayment">100.00zł</p>
+</header>
+<div class="container">
+  <h1>Kasa</h1>
+  <table class="checkoutTable">
+    <tr class="productDescription">
+      <th class="shoppingId">Lp.</th>
+      <th class="productName">Nazwa produktu</th>
+      <th class="productQuantity">Ilość w koszyku</th>
+      <th class="productSummaryPrice">Łączna cena</th>
+    </tr>
+    <tr class="productSummary">
+      <td class="shoppingId">1</td>
+      <td class="productName">Wózeczek</td>
+      <td class="productQuantity">2</td>
+      <td class="productSummaryPrice">50.00</td>
+    </tr>
+
+  </table>
+  <div class="shoppingSummary">
+1000,66
+  </div>
+  <span class="buttonBlock">
+    <form class="pay">
+      <button class="makePayment">Zapłać</button>
+    </form>
+        <form class="toShopping"method="get" th:action="@{/index}">
+      <button class="returnToShopping">Wróć do zakupów</button>
+    </form>
+  </span>
+</div>
+
+<footer>
+  <div class="ownerInfo">
+    <div>Andrzej Bidermann tel: 607125366 </div>
+    <div> andrzej840977@gmail.com</div>
+    <div> ul. Gostyńska 13e</div>
+    <div> 63-820 Piaski</div>
+  </div>
+</footer>
+</body>
+</html>
+<style>
+  body {
+    text-align: center;
+  }
+
+  header {
+    width: 1300px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .logo {
+    font-size: 44px;
+    font-family: 'Satisfy';
+    color: brown;
+    margin-top: 10px;
+  }
+
+  .logInButton {
+    background-color: coral;
+    border-radius: 15px;
+    width: 100px;
+    height: 50px;
+    font-size: 14px;
+  }
+
+  .searchForm {
+    margin-left: 150px;
+    margin-right: 0;
+    width: 550px;
+  }
+
+  .searchInput {
+    width: 340px;
+    height: 50px;
+    padding-right: 10px;
+    font-size: 18px;
+    /*padding-left: 10px;*/
+    border-radius:  10px 0 0 10px;
+    margin: 0 0 0 0;
+  }
+
+  .searchButton {
+    width: 50px;
+    height: 55px;
+    margin: 6px 0 0 -5px;
+    border-radius: 0 10px 10px 0;
+    border-width: 2px;
+    padding: 0;
+  }
+
+  .logFormButton {
+    padding-left: 100px;
+    margin-top:10px;
+  }
+
+  footer{
+    width:1400px;
+    height:140px;
+    background-color: aquamarine;
+    border: 1px;
+    margin-top: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 22px;
+
+  }
+  h1{
+    text-align: center;
+  }
+  hr{
+    width:calc(100% - 20px);
+    margin: 0 0 0 0;
+    padding: 0;
+  }
+  .ownerInfo{
+    padding-top: 20px;
+  }
+  .container{
+    margin-top: 50px;
+    border-width: 2px;
+    font-size: 24px;
+    width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .shoppingBasket{
+    margin-left: -20px;
+    margin-top: 11px;
+    font-size: 32px;
+    color: red;
+    font-weight: bolder;
+  }
+  .material-symbols-outlined {
+    width: 50px;
+    height: 50px;
+    font-size: 42px;
+  }
+
+  .material-symbols-outlined {
+    font-size: 42px;
+    margin-left: 220px;
+  }
+  .actualPayment{
+    font-size: 24px;
+    margin-top: 8px;
+  }
+  .checkoutTable{
+    border: 2px;
+    background-color: lightgreen;
+    text-align: center;
+  }
+  .productSummary{
+  }
+  .productDescription{
+
+  }
+  .shoppingId{
+    width: 80px;
+  }
+  .productName{
+    width:850px;
+  }
+  .productQuantity{
+    width:400px;
+  }
+  .productSummaryPrice{
+    width:170px;
+  }
+  .shoppingSummary, .pay{
+    margin-right: 50px;
+    margin-top: 15px;
+    text-align:  right;
+  }
+  .pay, .toShopping{
+    text-align:  right;
+
+  }
+  .makePayment{
+    text-decoration: line-through;
+    font-size: 28px;
+  }
+  .returnToShopping{
+    font-size: 28px;
+  }
+  .toShopping{
+    margin-top:15px;
+  }
+  .buttonBlock{
+  }
+</style>
