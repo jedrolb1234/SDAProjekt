@@ -29,7 +29,6 @@
         <form class="list-form" method="get" th:action="@{/shopping/schoolarticles}">
             <button class="linkButton">Artykuły szkolne</button><hr>
         </form>
-
         <form class="list-form" method="get" th:action="@{/shopping/games}">
             <button class="linkButton">Gry</button><hr>
         </form>
@@ -70,34 +69,38 @@
     <span class="container">
         <div class="slider">
             <label for="priceRange" class="priceLabel">Wybierz maksymalna cenę:</label>
-            <form class="slider-form" method="get" th:action="@{/index}">
-            <input type="range" id="priceRange" class="priceRange" name="priceRange" min="0" max="1000" step="10" value="500">
+            <form class="slider-form" method="get" th:action="@{/productDetail}" th:value="${price}">
+            <input type="range" id="priceRange" class="priceRange" name="price" min="0" max="1000" step="10" value="500">
+            <button>Fltruj</button>
             </form>
             <p id="priceSlider" class="priceSlider">11</p>
         </div>
-        <span class="productList">
-            <h3 class="productsHeader">Produkt</h3>
+        <span th:each="pl : ${productList}" class="productList">
+            <h3 class="productsHeader" th:text="${pl.name}">Produkt</h3>
 <!--            zrobić button"numerIndeksu" th:value="${numerIndeksu}"> -->
 
-            <button class="smallPict">
-                <input type="hidden" id="isdn" name="isdn" th:value="${isdn}" />
-            </button>
-
-            <div class="shortDesc">
+            <form th:action="@{/productDetail}">
+<!--                <button class="smallPict">-->
+<!--                    <input type="hidden" id="productId" name="productId" th:value="${pl.productId}" />-->
+<!--                </button>-->
+                <button class="smallPict" th:style="'background-image: url(' + ${pl.picture[0].path} + ');'"><!--th:style="'background-image: url(' + ${pl.picture[0]} + ');'">  style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')"> style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')" th:style="'background-image: url(' + ${pl.picture[0]} + ');'">
+                    <img th:src="@{/Img/Obrazy/art. szkolne/bidon/1.png}" /> -->
+                    <input type="hidden" id="productId" name="productId" th:value="${pl.productId}" />
+                </button>
+            </form>
+            <div class="shortDesc" th:text="${pl.description}">
                 to jest jakiś krótki opis opis.
             </div>
             <div class=priceWithButton>
-                <span class="smallPrice">99.99zl</span>
+                <span class="smallPrice" th:text="${pl.price}">99.99zl</span>
                 <form class="productButtonSmall">
                     <button class="addToCartButton">Dodaj</button>
                 </form>
             </div>
-
         </span>
-            <span class="productList">
+        <span class="productList">
             <h3 class="productsHeader">Produkt</h3>
-            <div class="smallPict">
-            </div>
+            <div class="smallPict"></div>
             <div class="shortDesc">
                 to jest jakiś krótki opis opis.
             </div>
@@ -107,11 +110,8 @@
                     <button class="addToCartButton">Dodaj</button>
                 </form>
             </div>
-
         </span>
     </span>
-
-
 </div>
 <footer>
     <div class="ownerInfo">
@@ -278,10 +278,20 @@
         box-sizing: border-box;
     }
 
+    /*.smallPict {*/
+    /*    background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png');*/
+    /*    background-size: cover;*/
+    /*    background-position: center;*/
+    /*    width: 200px;*/
+    /*    height: 200px;*/
+    /*    border:none;*/
+    /*    !*background-color: brown;*!*/
+
+    /*}*/
     .smallPict {
         width: 200px;
         height: 200px;
-        background-color: brown;
+        /*background-color: brown;*/
     }
 
     .smallPict:hover {

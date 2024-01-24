@@ -1,19 +1,23 @@
 package com.example.front.Model;
 
+import javax.persistence.OneToMany;
+import java.util.List;
 import java.util.Objects;
 
 public class Product {
-    private final int isdn;
+
+    private final int productId;
     private final  String name;
     private final String description;
     private final double price;
-    private final int picture;
     private final int size;
     private final String brand;
     private final int numberOfPlayer;
-
-    public Product(int isdn, String name, String description, double price, int picture, int size, String brand, int numberOfPlayer) {
-        this.isdn = isdn;
+    private final int category;
+    @OneToMany(mappedBy = "product")
+    private final List<Picture> picture;
+    public Product(int productId, String name, String description, double price, List<Picture> picture, int size, String brand, int numberOfPlayer, int category) {
+        this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -21,12 +25,12 @@ public class Product {
         this.size = size;
         this.brand = brand;
         this.numberOfPlayer = numberOfPlayer;
+        this.category = category;
     }
 
-    public int getIsdn() {
-        return isdn;
+    public int getProductId() {
+        return productId;
     }
-
     public String getName() {
         return name;
     }
@@ -39,7 +43,7 @@ public class Product {
         return price;
     }
 
-    public int getPicture() {
+    public List<Picture> getPicture() {
         return picture;
     }
 
@@ -55,23 +59,26 @@ public class Product {
         return numberOfPlayer;
     }
 
+    public int getCategory() {
+        return category;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return isdn == product.isdn && price == product.price && picture == product.picture && size == product.size && numberOfPlayer == product.numberOfPlayer && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(brand, product.brand);
+        return productId == product.productId && price == product.price && picture == product.picture && size == product.size && numberOfPlayer == product.numberOfPlayer && Objects.equals(name, product.name) && Objects.equals(description, product.description) && Objects.equals(brand, product.brand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isdn, name, description, price, picture, size, brand, numberOfPlayer);
+        return Objects.hash(productId, name, description, price, picture, size, brand, numberOfPlayer);
     }
 
     @Override
     public String toString() {
         return "Product{" +
-                "isdn=" + isdn +
+                "productId=" + productId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
