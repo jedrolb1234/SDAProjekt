@@ -18,7 +18,7 @@ public class PictureEntity {
     public PictureEntity(long id, ProductEntity product, String path) {
         this.id = id;
         this.product = product;
-        this.path = path;
+        this.path = "'" + path + "'";
     }
 
     public PictureEntity() {

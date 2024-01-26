@@ -139,8 +139,8 @@ Kategorie :
 5 - Pozostałe
 6 - puzzle
 7 - Samochody
-8 - Zabawki do kąpieli
-9 - Zabawki edukacyjne
-10 - Zabawki ogrodowe
-11 - Zabawki plastyczne
+9 - Zabawki do kąpieli
+10 - Zabawki edukacyjne
+11 - Zabawki ogrodowe
+12 - Zabawki plastyczne
 */

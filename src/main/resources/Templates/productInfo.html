@@ -11,17 +11,17 @@
 <body>
 <header>
     <h1 class="logo">Paddington</h1>
-    <form class="searchForm">
-        <input type="text" class="searchInput" placeholder="Szukaj">
+    <form class="searchForm" th:action="@{/shopping/searchbyname}" method="get">
+        <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
         <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
     </form>
 
     <form class="logFormButton">
-        <button class="logInButton" href="logInPage">zaloguj się</button>
+        <button class="logInButton">zaloguj się</button>
     </form>
     <span class="material-symbols-outlined">shopping_cart</span>
-    <p class="shoppingBasket">0</p>
-    <p class="actualPayment">100.00zł</p>
+    <p class="shoppingBasket" th:text="${cartQuantity}">0</p>
+    <p class="actualPayment" th:text="${sumPrice}">100.00zł</p>
 </header>
 <div class="layout">
     <span class="category-list">
@@ -69,34 +69,36 @@
     </span>
     <span class="container">
         <div class="group">
-            <div class="bigPicture"></div>
+            <div class="bigPicture" th:style="'background-image: url(\'' + ${product.picture[0].path} + '\');'"></div>
+            <div  class="pictures">
+                <a th:href="${pic.path}" target="_blank" class="smallPicture" th:each="pic : ${product.picture}" th:style="'background-image: url(\'' + ${pic.path} + '\');'"></a>
+            </div>
             <div class="generalDetail">
                 <div class="rightDetail">
-                    <h1 class="productName">Plecak tornister Jej Wysokość Zosia Paso</h1>
+                    <h1 class="productName" th:text="${product.name}"></h1>
                         <div class="basket">
-                            <div class="bigPrice">999.99</div>
-                            <form class="generalBasket">
-                                <select name="numberOfProducts" class="numberOfProducts">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+                            <span class="bigPrice" th:text="${product.price}"></span><span class="bigPrice" >zł</span>
+                            <form class="generalBasket" method="get" th:action="@{/productDetail/addToCart}">
+                                <select class="numberOfProducts" name="quantity" id="quantity">
+                                    <option value=1>1</option>
+                                    <option value=2>2</option>
+                                    <option value=3>3</option>
+                                    <option value=4>4</option>
+                                    <option value=5>5</option>
                                 </select>
+                                <input type="hidden" name="product" th:value="${product.id}" >
+                                <input type="hidden" name="category" id="cat" th:value="${product.category}">
                                 <button class="addToCart">Dodaj</button>
                             </form>
                         </div>
-                    <div class="warranty">Gwarancja: 24 miesiące</div>
+                    <span class="warranty">Gwarancja </span><span class="warranty" th:text="${product.warranty}"></span><span class="warranty"> miesiące</span>
                     <form class="checkout">
                         <button class="toCheckout">Do kasy</button>
                     </form>
                 </div>
             </div>
         </div>
-            <div class="fullDescription">Produkt najwyższej jakości, charakteryzujący się starannością wykonania, zapewniający wysoki komfort użytkowania.
-Ergonomicznie ukształtowany tył dopasowujący się do pleców dziecka, stabilne dno.
-Funkcjonalność użytkowania gwarantuje pojemna przegroda i boczna kieszeń zapinana na zamek, które pomagają dobrze rozlokować zawartość i utrzymać porządek w plecaku.
-Stabilne dno plecaka z wypustkami, na których opiera się w pozycji stojącej, dzięki czemu chroni dno przed przecieraniem i nadmiernym brudzeniem.
+            <div class="fullDescription" th:text="${product.description}">
             </div>
     </span>
 </div>
@@ -272,8 +274,10 @@ Stabilne dno plecaka z wypustkami, na których opiera się w pozycji stojącej, 
     .bigPicture {
         width: 500px;
         height: 500px;
-        background-color: lightgreen;
+        /*background-color: lightgreen;*/
         display: flex;
+        background-position: center;
+        background-size: cover;
         padding: 25px;
     }
     .generalDetail {
@@ -298,6 +302,7 @@ Stabilne dno plecaka z wypustkami, na których opiera się w pozycji stojącej, 
         font-size: 42px;
         display: inline-block;
         box-sizing: border-box;
+        margin-left: 10px;
     }
     .addToCart {
         width: 120px;
@@ -322,5 +327,19 @@ Stabilne dno plecaka z wypustkami, na których opiera się w pozycji stojącej, 
         width: 50px;
         height: 50px;
         font-size: 36px;
+    }
+    .pictures{
+        margin:10px;
+         background-color: bisque;
+         display: flex;
+         flex-direction: column;
+     }
+    .smallPicture{
+        width: 90px;
+        height: 90px;
+        display: flex;
+        background-position: center;
+        background-size: cover;
+        margin: 10px;
     }
 </style>
