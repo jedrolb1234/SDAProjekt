@@ -19,18 +19,21 @@ import java.util.List;
 public class BasketController {
 
     public List<ProductEntity> product;
-    private AppRepository repository;
+    private final AppRepository repository;
 
     public BasketController(AppRepository repository) {
         this.repository = repository;
     }
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_CLIENT_REGISTER', 'ROLE_ADMINISTRATOR')")
-    public String basket(HttpSession session, Model model) {
 
+    @GetMapping
+//    @PreAuthorize("hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN', 'CLIENT', 'ADMIN', 'user:register', 'user:admin')")
+//    @PreAuthorize("hasAnyAuthority('user:register', 'user:admin')")
+//    @PreAuthorize("hasAnyAuthority('user:client', 'user:register', 'user:admin')")
+    public String basket(HttpSession session, Model model) {
         List<ShoppingCart> cart = (List<ShoppingCart>) session.getAttribute("cart");
         if (cart == null) {
-            cart = new ArrayList<>();}
+            cart = new ArrayList<>();
+        }
         List<ShoppingSummary> shop = new ArrayList<>();
 
         ProductEntity p;
@@ -47,7 +50,7 @@ public class BasketController {
                     .name(p.getName())
                     .price(p.getPrice())
                     .quantity(sc.getQuantity())
-                    .sumPrice(sc.getQuantity()*p.getPrice())
+                    .sumPrice(sc.getQuantity() * p.getPrice())
                     .index(i)
                     .build();
             shop.add(ss);
@@ -56,7 +59,8 @@ public class BasketController {
         model.addAttribute("sumPrice", sumPrice);
         model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", shop);
-    return "/basket";
+        return "/basket";
+
     }
 
 

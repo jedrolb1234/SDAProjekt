@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -36,22 +37,30 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests() // deklarujemy że zadania muszą byc autoryzowane
-//                    .antMatchers("/").permitAll()
+                    .antMatchers("/shopping/addToCart/**")
+                    .authenticated()
+                //permitAll()
 //                    .antMatchers("/shopping/addToCart", "/basket")
-//                        .hasRole(CLIENT.name())
-////                        .expressionHandler()
+//                        .hasRole(CLIENT_GUEST.name())
+//                    .hasAnyAuthority("user:client", "user:register", "user:admin")
+//                        .expressionHandler()
 //                    .antMatchers("/shopping/addToCart", "/basket")
 //                        .hasRole(ADMIN.name())
-                    .antMatchers("/", "/index","/user/logOut", "/user/logIn", "/shopping/**","/productDetail/**") // część naszej białej listy
+                    .antMatchers("/", "/index","/user/logOut", "/user/logIn",
+                            "/shopping/**","/productDetail/**","/Img/Obrazy/**",
+                            "/returnToShopping") // część naszej białej listy
                     .permitAll()// kolejna część białej listy
-                    .anyRequest().authenticated() //permitAll().
+//                    .anyRequest().authenticated()//.permitAll()// //.
+//                .and()
+//                    .exceptionHandling()
+//                    .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
                 .formLogin()
                     .loginPage("/user/validateUser")
                     .permitAll()
-//                    .defaultSuccessUrl("/", true)
+                    .defaultSuccessUrl("/", true)
                     .passwordParameter("password")
-                    .usernameParameter("username")// jeśli chcemy użyć innej nazwy niz pliku html
+                    .usernameParameter("username")// 21jeśli chcemy użyć innej nazwy niz pliku html
                     .successHandler(addLogParameter())
                 .and()
                     .rememberMe() // domyślnie działa przez 30 minut braku aktywności
@@ -66,8 +75,8 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
                     .logoutSuccessUrl("/login");
-
     }
+
     @Bean
     public AuthenticationSuccessHandler addLogParameter() {
         return new SuccessHandler();

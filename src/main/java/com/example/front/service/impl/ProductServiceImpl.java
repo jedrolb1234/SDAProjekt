@@ -1,4 +1,4 @@
-package com.example.front.service.mpl;
+package com.example.front.service.impl;
 
 import com.example.front.repository.AppRepository;
 

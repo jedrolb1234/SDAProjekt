@@ -15,10 +15,10 @@ import java.util.List;
 @Controller
 @RequestMapping
 public class IndexController {
-    List<ProductEntity> product;
+
     private final AppRepository repository;
     private List<ShoppingCart> cart = new ArrayList<>();
-
+    List<ProductEntity> product;
     private int sumPrice;
     private int cartQuantity;
     public IndexController(AppRepository repository) {
@@ -46,7 +46,9 @@ public class IndexController {
         model.addAttribute("cartQuantity", 0);
         model.addAttribute("productList", product);
         return "/index";
-    }@GetMapping("/user/logOut")
+    }
+
+    @GetMapping("/user/logOut")
     public String logOut(HttpSession session, Model model) {
         session.invalidate();
         product = repository.findAll();
