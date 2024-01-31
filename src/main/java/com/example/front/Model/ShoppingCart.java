@@ -14,6 +14,14 @@ public class ShoppingCart {
         this.quantity = quantity;
     }
 
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "product=" + product +
+                ", quantity=" + quantity +
+                '}';
+    }
+
     public int getProduct() {
         return product;
     }

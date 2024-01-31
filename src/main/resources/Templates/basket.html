@@ -10,15 +10,24 @@
 <body>
 <header>
   <h1 class="logo">Paddington</h1>
-  <form class="searchForm">
-    <input type="text" class="searchInput" placeholder="Szukaj">
+  <form class="searchForm" th:action="@{/shopping/searchbyname}" method="get">
+    <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
     <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
   </form>
 
-  <form class="logFormButton"><button class ="logInButton" href="logInPage">zaloguj się</button></form>
-  <span class="material-symbols-outlined">shopping_cart</span>
-  <p class="shoppingBasket">0</p>
-  <p class="actualPayment">100.00zł</p>
+  <form th:if="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logOut}">
+    <button  class="logInButton">wyloguj się</button>
+  </form>
+  <form th:unless="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logIn}">
+    <button  class="logInButton">zaloguj się</button>
+  </form>
+  <form th:action="@{/basket}" method="get">
+    <button type="submit" class="goToBasket">
+      <span class="material-symbols-outlined">shopping_cart</span>
+      <p class="shoppingBasket" th:text="${cartQuantity}"></p>
+      <p class="actualPayment" th:text="${sumPrice}"></p>
+    </button>
+  </form>
 </header>
 <div class="container">
   <h1>Kasa</h1>
@@ -29,25 +38,25 @@
       <th class="productQuantity">Ilość w koszyku</th>
       <th class="productSummaryPrice">Łączna cena</th>
     </tr>
-    <tr class="productSummary">
-      <td class="shoppingId">1</td>
-      <td class="productName">Wózeczek</td>
-      <td class="productQuantity">2</td>
-      <td class="productSummaryPrice">50.00</td>
+    <tr class="productSummary" th:each=" pl:${productList}">
+      <td class="shoppingId" th:text="${pl.index}">1</td>
+      <td class="productName" th:text="${pl.name}">Wózeczek</td>
+      <td class="productQuantity" th:text="${pl.quantity}">2</td>
+      <td class="productSummaryPrice" th:text="${pl.sumPrice}">50.00</td>
     </tr>
 
   </table>
-  <div class="shoppingSummary">
+  <div class="shoppingSummary" th:text="${sumPrice}">
 1000,66
   </div>
-  <span class="buttonBlock">
+  <div class="buttonBlock">
     <form class="pay">
       <button class="makePayment">Zapłać</button>
     </form>
-        <form class="toShopping"method="get" th:action="@{/index}">
+    <form class="toShopping" method="get" th:action="@{/returnToShopping}">
       <button class="returnToShopping">Wróć do zakupów</button>
     </form>
-  </span>
+  </div>
 </div>
 
 <footer>
@@ -61,10 +70,6 @@
 </body>
 </html>
 <style>
-  body {
-    text-align: center;
-  }
-
   header {
     width: 1300px;
     display: flex;
@@ -112,6 +117,51 @@
     padding: 0;
   }
 
+
+  .ownerInfo {
+    padding-top: 20px;
+  }
+  .shoppingBasket {
+    margin-left: -20px;
+    margin-top: 11px;
+    font-size: 26px;
+    color: red;
+    font-weight: bolder;
+    display: inline-block;
+  }
+  .goToBasket{
+    background-color: white;
+    border: none;
+    width:  200px;
+    height:  60px;
+    display: inline-block;
+    margin-left:100px;
+  }
+  .goToBasket:hover{
+    cursor: pointer;
+  }
+  .basketForm{
+    margin-left: 0;
+  }
+  .actualPayment {
+    font-size: 28px;
+    /*margin-top: 8px;*/
+    display: inline-block;
+  }
+
+  .material-symbols-outlined {
+    width: 50px;
+    height: 50px;
+    font-size: 42px;
+    display: inline-block;
+
+  }
+
+  .material-symbols-outlined {
+    font-size: 42px;
+    /*margin-left: 220px;*/
+  }
+
   .logFormButton {
     padding-left: 100px;
     margin-top:10px;
@@ -137,9 +187,7 @@
     margin: 0 0 0 0;
     padding: 0;
   }
-  .ownerInfo{
-    padding-top: 20px;
-  }
+
   .container{
     margin-top: 50px;
     border-width: 2px;
@@ -148,36 +196,10 @@
     margin-left: auto;
     margin-right: auto;
   }
-  .shoppingBasket{
-    margin-left: -20px;
-    margin-top: 11px;
-    font-size: 32px;
-    color: red;
-    font-weight: bolder;
-  }
-  .material-symbols-outlined {
-    width: 50px;
-    height: 50px;
-    font-size: 42px;
-  }
-
-  .material-symbols-outlined {
-    font-size: 42px;
-    margin-left: 220px;
-  }
-  .actualPayment{
-    font-size: 24px;
-    margin-top: 8px;
-  }
-  .checkoutTable{
+   .checkoutTable{
     border: 2px;
     background-color: lightgreen;
     text-align: center;
-  }
-  .productSummary{
-  }
-  .productDescription{
-
   }
   .shoppingId{
     width: 80px;

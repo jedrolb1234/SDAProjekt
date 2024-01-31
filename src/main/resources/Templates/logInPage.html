@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>LogInPage</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Satisfy">
 </head>
 <body>
-    <form method="post" action="/login">
-        <h1>Księgania</h1>
+    <form method="post" th:action="@{/user/validateUser}">
+        <h1>Paddington</h1>
         <h2>Formularz logowania</h2>
         <div>
             <div>
@@ -15,17 +16,60 @@
             <div>
                 <input type="password" id="password" name="password" placeholder="Hasło">
             </div>
-            <p><input type="checkbox" id="remember-me" name="remember-me">
-                <label for="remember-me">Zapamiętaj</label>
+            <p>
+                <input class = "remember-box" type="checkbox" id="remember-me" name="remember-me">
+                <a for="remember-me">Zapamiętaj</a>
             </p>
             <button type="submit">Zaloguj</button>
         </div>
     </form>
     <div>
-        <p>Jeśli nie posiadasz jeszcze konta możesz przejść do <a href="/account/register">ZAREJESTRUJ.</a></p>
+        <p class="info1">Jeśli nie posiadasz jeszcze konta możesz przejść do
+            <form class="form" method="get" th:action="@{/user/registerPage}">
+                <button type="submit" class="register">ZAREJESTRUJ.</button>
+            </form>
+        </p>
         <p>Jeśli nie pamiętasz hasła możesz przejść do <a href="/account/changePassword">ZMIEŃ HASŁO.</a></p>
     </div>
 </body>
 </html>
 <style>
+    body{
+        text-align: center;
+        font-size: 28px;
+    }
+    h1{
+        font-size: 44px;
+        font-family: 'Satisfy';
+        color: brown;
+    }
+    input{
+        height: 30px;
+        width: 300px;
+        padding: 0 5px 0 5px;
+        margin: 8px;
+    }
+    .remember-box{
+        width: 50px;
+    }
+    button{
+        display: inline-block;
+        width: 150px;
+        height: 40px;
+        font-size: 28px;
+        background-color: bisque;
+    }
+    .register{
+        background-color: white;
+        border: none;
+    }
+    .register:hover{
+        cursor:pointer;
+    }
+    .info1{
+        display: inline-block;
+    }
+    .form{
+        display: inline-block;
+    }
 </style>

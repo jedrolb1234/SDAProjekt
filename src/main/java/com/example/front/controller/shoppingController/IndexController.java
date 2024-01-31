@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping
 public class IndexController {
     List<ProductEntity> product;
-    private AppRepository repository;
+    private final AppRepository repository;
     private List<ShoppingCart> cart = new ArrayList<>();
 
     private int sumPrice;
@@ -24,20 +24,83 @@ public class IndexController {
     public IndexController(AppRepository repository) {
         this.repository = repository;
     }
-    @GetMapping("/index")
-    public String returnToShopping(Model model) {
-//        model.addAttribute("productList", list);
-        return "/index";
-    }
+
 
     @GetMapping("/")
     public String home(HttpSession session, Model model) {
+//        session.invalidate();
+        product = repository.findAll();
+        cartQuantity = 0;
+        sumPrice = 0;
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+//            System.out.println(logged);
+        }catch(Exception e){
+            logged = false;
+            System.out.println(logged);
+        }
+        System.out.println(logged);
+        model.addAttribute("ifLogged", logged);
+        model.addAttribute("sumPrice", 0);
+        model.addAttribute("cartQuantity", 0);
+        model.addAttribute("productList", product);
+        return "/index";
+    }@GetMapping("/user/logOut")
+    public String logOut(HttpSession session, Model model) {
         session.invalidate();
         product = repository.findAll();
         cartQuantity = 0;
         sumPrice = 0;
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+//            System.out.println(logged);
+        }catch(Exception e){
+            logged = false;
+            System.out.println(logged);
+        }
+        model.addAttribute("ifLogged", logged);
         model.addAttribute("sumPrice", 0);
         model.addAttribute("cartQuantity", 0);
+        model.addAttribute("productList", product);
+        return "/index";
+    }
+    @GetMapping("/index")
+    public String paddington(HttpSession session, Model model) {
+        product = repository.findAll();
+        cartQuantity = 0;
+        sumPrice = 0;
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+//            System.out.println(logged);
+        }catch(Exception e){
+            logged = false;
+            System.out.println(logged);
+        }
+        System.out.println(logged);
+        model.addAttribute("ifLogged", logged);
+        model.addAttribute("sumPrice", 0);
+        model.addAttribute("cartQuantity", 0);
+        model.addAttribute("productList", product);
+        return "/index";
+    }
+    @GetMapping("/returnToShopping")
+    public String returnToShopping(HttpSession session, Model model) {
+        product = repository.findAll();
+        cart = (List<ShoppingCart>) session.getAttribute("cart");
+        System.out.println(cart);
+        if (cart == null) {
+            cart = new ArrayList<>();}
+        cartQuantity = 0;
+        sumPrice = 0;
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
+        }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         return "/index";
     }

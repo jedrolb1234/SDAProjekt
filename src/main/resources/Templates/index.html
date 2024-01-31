@@ -15,13 +15,20 @@
         <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
         <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
     </form>
-
-    <form class="logFormButton">
-        <button class="logInButton">zaloguj się</button>
+    <form th:if="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logOut}">
+        <button  class="logInButton">wyloguj się</button>
     </form>
-    <span class="material-symbols-outlined">shopping_cart</span>
-    <p class="shoppingBasket" th:text="${cartQuantity}">0</p>
-    <p class="actualPayment" th:text="${sumPrice}">100.00zł</p>
+    <form th:unless="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logIn}">
+        <button  class="logInButton">zaloguj się</button>
+    </form>
+
+    <form th:action="@{/basket}" method="get" class="basketForm">
+        <button type="submit" class="goToBasket">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <p class="shoppingBasket" th:text="${cartQuantity}"></p>
+            <p class="actualPayment" th:text="${sumPrice}"></p>
+        </button>
+    </form>
 </header>
 <div class="layout">
     <span class="category-list">
@@ -156,9 +163,53 @@
         padding: 0;
     }
 
+
+    .ownerInfo {
+        padding-top: 20px;
+    }
+    .shoppingBasket {
+        margin-left: -20px;
+        margin-top: 11px;
+        font-size: 26px;
+        color: red;
+        font-weight: bolder;
+        display: inline-block;
+    }
+    .goToBasket{
+        background-color: white;
+        border: none;
+        width:  200px;
+        height:  60px;
+        display: inline-block;
+        margin-left:100px;
+    }
+    .goToBasket:hover{
+        cursor: pointer;
+    }
+
+    .actualPayment {
+        font-size: 28px;
+        /*margin-top: 8px;*/
+        display: inline-block;
+    }
+
+    .material-symbols-outlined {
+        width: 50px;
+        height: 50px;
+        font-size: 42px;
+        display: inline-block;
+
+    }
+
+    .material-symbols-outlined {
+        font-size: 42px;
+        /*margin-left: 220px;*/
+    }
+
     .logFormButton {
-        padding-left: 100px;
+        padding-left: 10px;
         margin-top:10px;
+        margin-left: 100px;
     }
 
     .layout {
@@ -213,37 +264,13 @@
         text-align: center;
         font-size: 22px;
     }
-    .ownerInfo {
-        padding-top: 20px;
-    }
-    .shoppingBasket {
-        margin-left: -20px;
-        margin-top: 11px;
-        font-size: 32px;
-        color: red;
-        font-weight: bolder;
-    }
 
-    .material-symbols-outlined {
-        width: 50px;
-        height: 50px;
-        font-size: 42px;
-    }
-
-    .material-symbols-outlined {
-        font-size: 42px;
-        margin-left: 220px;
-    }
 
     .productsHeader {
         margin: 2px;
         text-align: center;
     }
 
-    .actualPayment {
-        font-size: 24px;
-        margin-top: 8px;
-    }
 
     .productList {
         margin: 8px 8px 8px 8px;
@@ -254,17 +281,6 @@
         display: inline-block;
         box-sizing: border-box;
     }
-
-    /*.smallPict {*/
-    /*    background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png');*/
-    /*    background-size: cover;*/
-    /*    background-position: center;*/
-    /*    width: 200px;*/
-    /*    height: 200px;*/
-    /*    border:none;*/
-    /*    !*background-color: brown;*!*/
-
-    /*}*/
     .smallPict {
         width: 200px;
         height: 200px;
@@ -274,11 +290,6 @@
 
     .smallPict:hover {
         transform: translateY(-5px);
-    }
-    .shortDesc {
-        margin-top: 4px;
-        height: 50px;
-        font-size: 22px;
     }
 
     .smallPrice {
@@ -327,6 +338,7 @@
         font-size: 26px;
         border: 1px;
     }
+
 </style>
 
 <script>

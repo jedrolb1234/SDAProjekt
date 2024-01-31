@@ -33,14 +33,22 @@ public class ProductDetailsController {
                                 @RequestParam(name = "quantity", required = false) Optional<Integer> quantity, @RequestParam(name = "product") int id) {
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         System.out.println(cart);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
         if (cart == null) {
             cart = new ArrayList<>();}
         ShoppingCart productWithQuantity = new ShoppingCart();
-        if(quantity.isPresent())
-            productWithQuantity.setQuantity((int)quantity.get());
+        if(quantity.isPresent()) {
+            productWithQuantity.setQuantity((int) quantity.get());
+            cart.add(productWithQuantity);
+        }
         else productWithQuantity.setQuantity(0);
         productWithQuantity.setProduct(id);
-        cart.add(productWithQuantity);
         cartQuantity = 0;
         sumPrice = 0;
         if(cart != null) {
@@ -72,6 +80,13 @@ public class ProductDetailsController {
                             @RequestParam(name = "quantity") int quantity, @RequestParam(name = "product") int id){
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         System.out.println(cart);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
         if (cart == null) {
             cart = new ArrayList<>();}
         ShoppingCart productWithQuantity = new ShoppingCart();
@@ -102,4 +117,5 @@ public class ProductDetailsController {
         session.setAttribute("cart", cart);
         return "/productInfo";
     }
+
 }

@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Księgania</h1>
+<h1>Paddington</h1>
 <h2>Formularz rejestracji</h2>
 <form th:action="@{/account/register}" method="POST">
     <div>
@@ -24,8 +24,7 @@
     <div>
         <input type="text" id="phone" name="phone" placeholder="Nr. telefonu" required pattern="\d{9}">
     </div>
-
-        <input type="checkbox" id="administratorCheckbox" name="administratorCheckbox"
+        <input type="checkbox" id="administratorCheckbox" name="administratorCheckbox" class="admin-box"
                onchange="toogleInput() ">
 
     <label for="administratorCheckbox">Zaznacz jeśli jesteś administratorem.</label>
@@ -52,5 +51,43 @@
 <style>
     #admin-password{
         display : none;
+    }
+    body{
+        text-align: center;
+        font-size: 28px;
+    }
+    h1{
+        font-size: 44px;
+        font-family: 'Satisfy';
+        color: brown;
+    }
+    input{
+        height: 30px;
+        width: 300px;
+        padding: 0 5px 0 5px;
+        margin: 8px;
+    }
+    .admin-box{
+        width: 50px;
+    }
+    button{
+        display: inline-block;
+        width: 150px;
+        height: 40px;
+        font-size: 28px;
+        background-color: bisque;
+    }
+    .register{
+        background-color: white;
+        border: none;
+    }
+    .register:hover{
+        cursor:pointer;
+    }
+    .info1{
+        display: inline-block;
+    }
+    .form{
+        display: inline-block;
     }
 </style>

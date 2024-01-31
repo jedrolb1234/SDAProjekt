@@ -3,6 +3,7 @@ package com.example.front.controller.shoppingController;
 import com.example.front.Model.ShoppingCart;
 import com.example.front.repository.AppRepository;
 import com.example.front.repository.ProductEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +24,11 @@ public class ShoppingController {
 
     private int sumPrice;
     private int cartQuantity;
-    private AppRepository repository;
+    private final AppRepository repository;
 
     public ShoppingController(AppRepository repository) {
         this.repository = repository;
     }
-
-
-
 
     @GetMapping("/schoolarticles")
     public String schoolArticles(HttpSession session, Model model) {
@@ -41,19 +39,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 1);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -66,19 +67,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 2);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -91,19 +95,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 6);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -116,19 +123,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 4);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -141,19 +151,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 3);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -166,19 +179,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 7);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -191,19 +207,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 12);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -216,19 +235,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 12);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -241,19 +263,22 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 11);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
         return "/index";
     }
 
@@ -266,19 +291,21 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", 9);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
         return "/index";
     }
 
@@ -291,19 +318,21 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
-        model.addAttribute("category", 5);
+        model.addAttribute("category", 5);        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+        System.out.println(logged);
         return "/index";
     }
     @GetMapping("searchbyname")
@@ -315,52 +344,62 @@ public class ShoppingController {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+
+
         return "/index";
     }
 
     @GetMapping("/productFiltered")
-    public String productFilteredByPrice(HttpSession session, Model model, @RequestParam(name = "price") int price, @RequestParam(name = "category") int category) {
-        product = repository.findProductsByPriceAndCategory(price, category);
+    public String productFilteredByPrice(HttpSession session, Model model, @RequestParam(name = "price") int price, @RequestParam(name = "category", required = false) Optional<Integer> category) {
+        if(category.isPresent())
+            product = repository.findProductsByPriceAndCategory(price, category.get());
+        else product = repository.findProductsByPrice(price);
+
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         System.out.println(cart);
         if (cart == null) {
             cart = new ArrayList<>();}
         cartQuantity = 0;
         sumPrice = 0;
-        if(cart != null) {
-            for (ShoppingCart sc : cart) {
-                cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            }
-            model.addAttribute("sumPrice", sumPrice);
-            model.addAttribute("cartQuantity", cartQuantity);
-        }else {
-            model.addAttribute("sumPrice", 0);
-            model.addAttribute("cartQuantity", 0);
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
         }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
-        model.addAttribute("category", category);
+        if(category.isPresent())
+            model.addAttribute( "category", category);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
         return "/index";
     }
 
     @GetMapping("/addToCart")
+//    @PreAuthorize("hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN')")
     public String addToCart(HttpSession session, Model model, @RequestParam(name = "category") int category,
                             @RequestParam(name = "quantity") int quantity, @RequestParam(name = "product") int id,
                             @RequestParam(name = "name", required = false) Optional<String> name){
         cart = (List<ShoppingCart>) session.getAttribute("cart");
-        System.out.println(cart);
         if (cart == null) {
             cart = new ArrayList<>();}
         ShoppingCart productWithQuantity = new ShoppingCart();
@@ -374,6 +413,8 @@ public class ShoppingController {
             for (ShoppingCart sc : cart) {
                 cartQuantity += sc.getQuantity();
                 sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
+                System.out.println(sc);
+
             }
             model.addAttribute("sumPrice", sumPrice);
             model.addAttribute("cartQuantity", cartQuantity);
@@ -388,6 +429,13 @@ public class ShoppingController {
         model.addAttribute("productList", product);
         model.addAttribute("category", category);
         session.setAttribute("cart", cart);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
 
         return "/index";
     }
