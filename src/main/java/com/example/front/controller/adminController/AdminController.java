@@ -163,6 +163,7 @@ public class AdminController {
     String deleteUser(HttpSession session, Model model, @RequestParam(name = "username") String username){
         System.out.println(username);
         users = userRepository.findByName(username);
+        System.out.println(users.get(0).getUsername());
         session.invalidate();
         cartQuantity = 0;
         sumPrice = 0;
@@ -175,7 +176,7 @@ public class AdminController {
         model.addAttribute("ifLogged", logged);
         model.addAttribute("sumPrice", 0);
         model.addAttribute("cartQuantity", 0);
-        model.addAttribute("userList", users);
+        model.addAttribute("usersList", users);
         return "/admin/deleteUser";
     }
 }

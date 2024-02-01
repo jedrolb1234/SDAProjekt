@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface AppRepository extends JpaRepository<ProductEntity, Long> {
 
     List<ProductEntity> findAll();
-    void deleteById(int id);
     @Query("SELECT e FROM ProductEntity e WHERE e.id = :product")
     Optional<ProductEntity> getProductRepositoryByProductId(long product);
     @Query(value = "select e from ProductEntity e where e.name = :name")
