@@ -42,6 +42,9 @@
         <form class="list-form" method="get" th:action="@{/admin/deleteProductPage}">
             <button class="linkButton">Usuń produkty</button><hr>
         </form>
+        <form class="list-form" method="get" th:action="@{/index}">
+            <button class="linkButton">POWRÓT DO ZAKUPÓW</button><hr>
+        </form>
     </span>
     <span class="container">
         <div class="slider">
@@ -55,7 +58,7 @@
         </div>
         <span th:each="pl : ${productList}" class="productList">
             <h3 class="productsHeader" th:text="${pl.name}">Produkt</h3>
-            <form method="get" th:action="@{/productDetail}">
+            <form method="get" th:action="@{/admin/productDetail}">
                 <input type="hidden" id="id" name="id" th:value="${pl.id}" />
                 <input type="hidden" id="quant" name="quantity" th:if="${quantity}" th:value="${quantity}" />
                 <button title="bigButton" class="smallPict" th:style="'background-image: url(\'' + ${pl.picture[0].path} + '\');'"> <!--th:style="'background-image: url(' + ${pl.picture[0]} + ');'"> style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png');"   style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')"> style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')" th:style="'background-image: url(' + ${pl.picture[0]} + ');'"> -->

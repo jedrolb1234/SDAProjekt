@@ -151,4 +151,20 @@ public class UserEntity implements UserDetails {
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
     }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", authorities=" + authorities +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", isAccountNonExpired=" + isAccountNonExpired +
+                ", isAccountNonLocked=" + isAccountNonLocked +
+                ", isCredentialsNonExpired=" + isCredentialsNonExpired +
+                ", isEnabled=" + isEnabled +
+                '}';
+    }
 }

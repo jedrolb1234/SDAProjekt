@@ -48,7 +48,7 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //                        .hasRole(ADMIN.name())
                     .antMatchers("/", "/index","/user/logOut", "/user/logIn",
                             "/shopping/**","/productDetail/**","/Img/Obrazy/**",
-                            "/returnToShopping") // część naszej białej listy
+                            "/returnToShopping", "/admin**") // część naszej białej listy
                     .permitAll()// kolejna część białej listy
 //                    .anyRequest().authenticated()//.permitAll()// //.
 //                .and()

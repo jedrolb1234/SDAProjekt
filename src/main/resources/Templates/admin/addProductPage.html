@@ -42,13 +42,17 @@
         <form class="list-form" method="get" th:action="@{/admin/deleteProductPage}">
             <button class="linkButton">Usuń produkty</button><hr>
         </form>
+        <form class="list-form" method="get" th:action="@{/index}">
+            <button class="linkButton">POWRÓT DO ZAKUPÓW</button><hr>
+        </form>
     </span>
     <span class="container">
 <div>
     <h1>Dodaj produkt</h1>
-    <form class="addProduct">
+    <form class="addProduct" method="get" th:action="@{/admin/addProductToDB}">
         <input type="text" name="name" placeholder="Nazwa">
         <input type="text" name="description" placeholder="Opis">
+        <input type="text" name="brand" placeholder="Marka">
         <input type="text" name="price" placeholder="Cena">
         <input type="text" name="size" placeholder="Znaczący wymiar">
         <input type="text" name="numberOfPlayer" placeholder="Liczba graczy">
@@ -66,11 +70,11 @@
                                         <option value=11>Zabawki ogrodowe</option>
                                         <option value=12>Zabawki plastyczne</option>
         </select>
-        <input type="text" name="picture" placeholder="Ścieżka do obrazu">
-        <input type="text" name="picture" placeholder="Ścieżka do obrazu">
-        <input type="text" name="picture" placeholder="Ścieżka do obrazu">
-        <input type="text" name="picture" placeholder="Ścieżka do obrazu">
-        <input type="text" name="picture" placeholder="Ścieżka do obrazu">
+        <input type="text" name="picture0" placeholder="Ścieżka do obrazu">
+        <input type="text" name="picture1" placeholder="Ścieżka do obrazu">
+        <input type="text" name="picture2" placeholder="Ścieżka do obrazu">
+        <input type="text" name="picture3" placeholder="Ścieżka do obrazu">
+        <input type="text" name="picture4" placeholder="Ścieżka do obrazu">
         <button type="submit" class="addButton">Dodaj produkt</button>
     </form>
 

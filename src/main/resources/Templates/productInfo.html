@@ -16,9 +16,13 @@
         <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
     </form>
 
-    <form class="logFormButton">
-        <button class="logInButton">zaloguj się</button>
+    <form th:if="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logOut}">
+        <button  class="logInButton">wyloguj się</button>
     </form>
+    <form th:unless="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logIn}">
+        <button  class="logInButton">zaloguj się</button>
+    </form>
+
     <form th:action="@{/basket}" method="get">
         <button type="submit" class="goToBasket">
             <span class="material-symbols-outlined">shopping_cart</span>
@@ -315,6 +319,7 @@
         font-size: 32px;
         background-color: coral;
         border-radius: 6px;
+        margin-left: 15px;
     }
     .toCheckout {
         width: 170px;
@@ -346,5 +351,9 @@
         background-position: center;
         background-size: cover;
         margin: 10px;
+    }
+    .basket{
+        text-align: center;
+        margin: 40px 0 40px 0;
     }
 </style>

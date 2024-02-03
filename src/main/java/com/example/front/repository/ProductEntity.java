@@ -1,23 +1,24 @@
 package com.example.front.repository;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "products")
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int productId;
     private String name;
     @Column(length = 10000)
     private String description;
     private int price;
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JoinColumn(name = "product_id")
     private List<PictureEntity> picture; // = new HashSet<>();
     private int size;
     private String brand;
@@ -26,9 +27,8 @@ public class ProductEntity {
     private int category;
 
 
-    public ProductEntity(int productId, String name, String description, int price, List<PictureEntity> picture,
+    public ProductEntity(String name, String description, int price, List<PictureEntity> picture,
                          int size, String brand, int numberOfPlayer, int warranty, int category) {
-        this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -78,13 +78,6 @@ public class ProductEntity {
         this.warranty = warranty;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getProductId() {
-        return productId;
-    }
     public long getId() {
         return id;
     }

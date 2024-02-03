@@ -26,8 +26,9 @@
     </div>
         <input type="checkbox" id="administratorCheckbox" name="administratorCheckbox" class="admin-box"
                onchange="toogleInput() ">
-
+    <div>
     <label for="administratorCheckbox">Zaznacz jeśli jesteś administratorem.</label>
+    </div>
     <div>
         <input type="password" id="admin-password" name="admin-password"
                placeholder="Hasło administratora"
@@ -42,7 +43,7 @@
         const checkbox = document.getElementById('administratorCheckbox');
         var administrator = document.getElementById('admin-password');
         if (checkbox.checked) {
-            administrator.style.display = 'block';
+            administrator.style.display = 'inline-block';
         } else {
             administrator.style.display = 'none';
         }

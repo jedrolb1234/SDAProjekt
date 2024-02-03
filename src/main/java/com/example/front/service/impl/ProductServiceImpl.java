@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     public Optional<ProductEntity> getProductByProductId(int productId){
         return repository.findAll()
                 .stream()
-                .filter(product -> product.getProductId() == productId)
+                .filter(product -> product.getId() == productId)
                 .findFirst();
             };
     @Override

@@ -66,7 +66,6 @@ public class UserController {
                             @RequestParam(value = "admin-password", required = false) Optional<String> apassword,
                             Model model) {
 
-        System.out.println(username);
         if (!password.equals(rpassword)) {
             model.addAttribute("error", "Hasła się nie zgadzają!");
             return "/account/register";
@@ -89,13 +88,12 @@ public class UserController {
         Set<Authority> grantedAuthority = new HashSet<>();
 // Jeśli admin jest włączony
         if (admin.isPresent()) {
-            grantedAuthority.add(new Authority(1L, "ADMIN"));
+            grantedAuthority.add(new Authority( "ADMIN"));
         } else {
-            grantedAuthority.add(new Authority(2L, "CLIENT"));
+            grantedAuthority.add(new Authority( "CLIENT"));
         }
 
         UserEntity applicationUser = new UserEntity(
-//        userRepository.saveNewUser(
                 username,
                 passwordEncoder.encode(password),
                 email,
@@ -105,10 +103,8 @@ public class UserController {
                 true,
                 true
         );
-        System.out.println("jakis tekst");
 
-//        Authority authority = new Authority("CLIENT");
-//        applicationUser.addAuthority(authority);
+        applicationUser.setAuthorities(grantedAuthority);
         userRepository.save(applicationUser);
         return "/logInPage";
     }

@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
+    List<UserEntity> findAll();
     @Query(value = "SELECT e FROM UserEntity e WHERE e.username LIKE %:username%")
     List<UserEntity> findByName(String username);
 }

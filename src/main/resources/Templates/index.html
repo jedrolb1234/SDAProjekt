@@ -32,7 +32,14 @@
 </header>
 <div class="layout">
     <span class="category-list">
-        <h2 class="listHeader">Asortyment</h2>
+        <form class="list-form" method="get" th:action="@{/}">
+            <button class="linkButton-header">ASORTYMENT</button><hr>
+        </form>
+<!--        <h2 class="listHeader">Asortyment</h2>-->
+<!--        dodać th:if jeśli jestes administratorem-->
+        <form class="list-form" method="get" th:action="@{/admin/}">
+            <button class="linkButton">PANEL ADMNITATORA</button><hr>
+        </form>
         <form class="list-form" method="get" th:action="@{/shopping/schoolarticles}">
             <button class="linkButton">Artykuły szkolne</button><hr>
         </form>
@@ -140,8 +147,9 @@
 
     .searchForm {
         margin-left: 150px;
-        margin-right: 0;
+        /*margin-right: 0;*/
         width: 550px;
+
     }
 
     .searchInput {
@@ -152,15 +160,17 @@
         /*padding-left: 10px;*/
         border-radius:  10px 0 0 10px;
         margin: 0 0 0 0;
+        box-sizing: border-box;
     }
 
     .searchButton {
         width: 50px;
         height: 55px;
-        margin: 6px 0 0 -5px;
+        margin: 9px 0 0 -5px;
         border-radius: 0 10px 10px 0;
         border-width: 2px;
         padding: 0;
+        box-sizing: border-box;
     }
 
 
@@ -224,9 +234,15 @@
         font-size: 24px;
         border-width: 0;
     }
+    .linkButton-header{
+        font-weight: bold;
+        background-color: white;
+        color: black;
+        font-size: 24px;
+        border-width: 0;
+    }
 
-
-    .linkButton:hover {
+    .linkButton:hover, .linkButton-header:hover{
         background-color: coral;
         border-radius: 8px;
     }

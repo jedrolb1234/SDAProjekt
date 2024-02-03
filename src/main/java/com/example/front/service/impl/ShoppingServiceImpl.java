@@ -11,12 +11,23 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ShoppingServiceImpl implements ShoppingService {
+    AppRepository repository;
+
+    public ShoppingServiceImpl(AppRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
-    public void setMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity,int sumPrice, AppRepository repository, int category){
-        product = repository.findProductsByCategory(category);
+    public void setMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
+                       int cartQuantity,int sumPrice, int category){
+        product = repository.findProductsByCategory(category)
+                .stream()
+                .filter(p -> !p.getPicture().isEmpty())
+                .collect(Collectors.toList());
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         System.out.println(cart);
         if (cart == null) {
@@ -25,7 +36,7 @@ public class ShoppingServiceImpl implements ShoppingService {
         sumPrice = 0;
         for (ShoppingCart sc : cart) {
             cartQuantity += sc.getQuantity();
-            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
+            sumPrice += sc.getQuantity() * repository.getProductByProductId(sc.getProduct()).get().getPrice();
         }
         model.addAttribute("sumPrice", sumPrice);
         model.addAttribute("cartQuantity", cartQuantity);
@@ -40,8 +51,12 @@ public class ShoppingServiceImpl implements ShoppingService {
         model.addAttribute("ifLogged", logged);
     }
     @Override
-    public void setMVCByName(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice, AppRepository repository, String name){
-        product = repository.findProductsByName(name);
+    public void setMVCByName(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
+                             int cartQuantity, int sumPrice, String name){
+        product = repository.findProductsByName(name)
+                .stream()
+                .filter(p -> !p.getPicture().isEmpty())
+                .collect(Collectors.toList());;
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();}
@@ -49,7 +64,7 @@ public class ShoppingServiceImpl implements ShoppingService {
         sumPrice = 0;
         for (ShoppingCart sc : cart) {
             cartQuantity += sc.getQuantity();
-            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
+            sumPrice += sc.getQuantity() * repository.getProductByProductId(sc.getProduct()).get().getPrice();
         }
         model.addAttribute("sumPrice", sumPrice);
         model.addAttribute("cartQuantity", cartQuantity);
@@ -63,10 +78,21 @@ public class ShoppingServiceImpl implements ShoppingService {
         model.addAttribute("ifLogged", logged);
     };
 
-    public void setMVCFilteredByPrice(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice, AppRepository repository, Optional<Integer> category, int price){
-        if(category.isPresent())
-            product = repository.findProductsByPriceAndCategory(price, category.get());
-        else product = repository.findProductsByPrice(price);
+    public void setMVCFilteredByPrice(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
+                                      int cartQuantity, int sumPrice, Optional<Integer> category, int price){
+        if(category.isPresent()) {
+            product = repository.findProductsByPriceAndCategory(price, category.get())
+                    .stream()
+                    .filter(p -> !p.getPicture().isEmpty())
+                    .collect(Collectors.toList());
+            model.addAttribute("category", category.get());
+        }
+        else {
+            product = repository.findProductsByPrice(price)
+                    .stream()
+                    .filter(p -> !p.getPicture().isEmpty())
+                    .collect(Collectors.toList());
+        }
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();}
@@ -74,13 +100,11 @@ public class ShoppingServiceImpl implements ShoppingService {
         sumPrice = 0;
         for (ShoppingCart sc : cart) {
             cartQuantity += sc.getQuantity();
-            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
+            sumPrice += sc.getQuantity() * repository.getProductByProductId(sc.getProduct()).get().getPrice();
         }
         model.addAttribute("sumPrice", sumPrice);
         model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
-        if(category.isPresent())
-            model.addAttribute( "category", category);
         boolean logged;
         try {
             logged = (boolean) session.getAttribute("logged");
@@ -91,7 +115,7 @@ public class ShoppingServiceImpl implements ShoppingService {
     };
     @Override
     public void setCart(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice,
-                        AppRepository repository, int category, int quantity, int id, Optional<String> name){
+                        int category, int quantity, int id, Optional<String> name){
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();}
@@ -105,7 +129,7 @@ public class ShoppingServiceImpl implements ShoppingService {
         if(cart != null) {
             for (ShoppingCart sc : cart) {
                 cartQuantity += sc.getQuantity();
-                sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
+                sumPrice += sc.getQuantity() * repository.getProductByProductId(sc.getProduct()).get().getPrice();
                 System.out.println(sc);
 
             }

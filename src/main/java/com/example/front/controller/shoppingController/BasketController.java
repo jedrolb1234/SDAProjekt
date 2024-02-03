@@ -4,7 +4,8 @@ import com.example.front.Model.ShoppingCart;
 import com.example.front.Model.ShoppingSummary;
 import com.example.front.repository.AppRepository;
 import com.example.front.repository.ProductEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import com.example.front.service.BasketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,46 +20,16 @@ import java.util.List;
 public class BasketController {
 
     public List<ProductEntity> product;
-    private final AppRepository repository;
-
-    public BasketController(AppRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    BasketService service;
 
     @GetMapping
 //    @PreAuthorize("hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN', 'CLIENT', 'ADMIN', 'user:register', 'user:admin')")
 //    @PreAuthorize("hasAnyAuthority('user:register', 'user:admin')")
 //    @PreAuthorize("hasAnyAuthority('user:client', 'user:register', 'user:admin')")
     public String basket(HttpSession session, Model model) {
-        List<ShoppingCart> cart = (List<ShoppingCart>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-        }
-        List<ShoppingSummary> shop = new ArrayList<>();
+        service.setBasketMVC(session, model);
 
-        ProductEntity p;
-        int i = 1;
-        int cartQuantity = 0;
-        int sumPrice = 0;
-        for (ShoppingCart sc : cart) {
-            cartQuantity += sc.getQuantity();
-            sumPrice += sc.getQuantity() * repository.getProductRepositoryByProductId(sc.getProduct()).get().getPrice();
-            p = repository.getProductRepositoryByProductId(sc.getProduct()).get();
-            ShoppingSummary ss;
-            ss = ShoppingSummary.builder()
-                    .id(p.getId())
-                    .name(p.getName())
-                    .price(p.getPrice())
-                    .quantity(sc.getQuantity())
-                    .sumPrice(sc.getQuantity() * p.getPrice())
-                    .index(i)
-                    .build();
-            shop.add(ss);
-            i++;
-        }
-        model.addAttribute("sumPrice", sumPrice);
-        model.addAttribute("cartQuantity", cartQuantity);
-        model.addAttribute("productList", shop);
         return "/basket";
 
     }
