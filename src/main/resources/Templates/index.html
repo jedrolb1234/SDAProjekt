@@ -21,8 +21,13 @@
     <form th:unless="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logIn}">
         <button  class="logInButton">zaloguj się</button>
     </form>
+    <form class="logFormButton" th:if="${ifLogged}"  method="get" th:action="@{/account/settings}">
+        <button class="goToSettings">
+            <span class="material-symbols-outlined">settings</span>
+        </button>
+    </form>
 
-    <form th:action="@{/basket}" method="get" class="basketForm">
+    <form th:if="${ifLogged}" th:action="@{/basket}" method="get" class="basketForm">
         <button type="submit" class="goToBasket">
             <span class="material-symbols-outlined">shopping_cart</span>
             <p class="shoppingBasket" th:text="${cartQuantity}"></p>
@@ -31,14 +36,14 @@
     </form>
 </header>
 <div class="layout">
+
     <span class="category-list">
+        <!--        dodać th:if jeśli jestes administratorem-->
+        <form class="list-form" th:if="${admin}" method="get" th:action="@{/admin/}">
+            <button class="linkButton">PANEL ADMNITATORA</button><hr>
+        </form>
         <form class="list-form" method="get" th:action="@{/}">
             <button class="linkButton-header">ASORTYMENT</button><hr>
-        </form>
-<!--        <h2 class="listHeader">Asortyment</h2>-->
-<!--        dodać th:if jeśli jestes administratorem-->
-        <form class="list-form" method="get" th:action="@{/admin/}">
-            <button class="linkButton">PANEL ADMNITATORA</button><hr>
         </form>
         <form class="list-form" method="get" th:action="@{/shopping/schoolarticles}">
             <button class="linkButton">Artykuły szkolne</button><hr>
@@ -89,16 +94,19 @@
             <form method="get" th:action="@{/productDetail}">
                 <input type="hidden" id="productId" name="product" th:value="${pl.id}" />
                 <input type="hidden" id="quant" name="quantity" th:if="${quantity}" th:value="${quantity}" />
-                <button title="bigButton" class="smallPict" th:style="'background-image: url(\'' + ${pl.picture[0].path} + '\');'"> <!--th:style="'background-image: url(' + ${pl.picture[0]} + ');'"> style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png');"   style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')"> style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')" th:style="'background-image: url(' + ${pl.picture[0]} + ');'"> -->
+                <button th:title="${pl.name}" class="smallPict" th:style="'background-image: url(\'' + ${pl.picture[0].path} + '\');'"> <!--th:style="'background-image: url(' + ${pl.picture[0]} + ');'"> style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png');"   style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')"> style="background-image: url('/Img/Obrazy/art. szkolne/bidon/1.png')" th:style="'background-image: url(' + ${pl.picture[0]} + ');'"> -->
                 </button>
             </form>
             <div class=priceWithButton>
                 <span class="smallPrice" th:text="${pl.price}"></span><span class="smallPrice"> zł</span>
-                <form class="productButtonSmall" th:action="@{/shopping/addToCart}" method="get">
+                <form th:if="${ifLogged}"  class="productButtonSmall" th:action="@{/shopping/addToCart}" method="get">
                     <input type="hidden" name="quantity" id="quantity" th:value="1">
                     <input type="hidden" name="product" id="product" th:value="${pl.id}">
                     <input type="hidden" name="category" id="cat" th:value="${pl.category}">
                     <button class="addToCartButton">Dodaj</button>
+                </form>
+                <form th:if="${!ifLogged}"  class="productButtonSmall" th:action="@{/user/registerPage}" method="get">
+                    <button class="registerUser">Zarejestruj się</button>
                 </form>
             </div>
         </span>
@@ -123,6 +131,11 @@
     body {
         text-align: center;
     }
+    /*header{*/
+    /*    display: flex; */
+    /*    justify-content: space-between;*/
+    /*    align-items: center;*/
+    /*}*/
     header {
         width: 1300px;
         display: flex;
@@ -146,10 +159,11 @@
     }
 
     .searchForm {
-        margin-left: 150px;
-        /*margin-right: 0;*/
-        width: 550px;
-
+        margin-left: 50px;
+        margin-right: 100px;
+        width: 450px; !important
+        padding 0;
+        box-sizing: border-box;
     }
 
     .searchInput {
@@ -165,14 +179,14 @@
 
     .searchButton {
         width: 50px;
-        height: 55px;
+        height: 50px;
         margin: 9px 0 0 -5px;
         border-radius: 0 10px 10px 0;
         border-width: 2px;
         padding: 0;
         box-sizing: border-box;
+        justify-items: center;
     }
-
 
     .ownerInfo {
         padding-top: 20px;
@@ -188,10 +202,10 @@
     .goToBasket{
         background-color: white;
         border: none;
-        width:  200px;
+        width:  140px;
         height:  60px;
         display: inline-block;
-        margin-left:100px;
+        margin-left:120px;
     }
     .goToBasket:hover{
         cursor: pointer;
@@ -199,8 +213,18 @@
 
     .actualPayment {
         font-size: 28px;
-        /*margin-top: 8px;*/
         display: inline-block;
+    }
+    .goToSettings{
+        background-color: white;
+        border: none;
+        width:  50px;
+        height:  60px;
+        display: inline-block;
+        margin-left:120px;
+    }
+    .goToSettings:hover{
+        cursor: pointer;
     }
 
     .material-symbols-outlined {
@@ -219,7 +243,7 @@
     .logFormButton {
         padding-left: 10px;
         margin-top:10px;
-        margin-left: 100px;
+        margin-left: 0;
     }
 
     .layout {
@@ -332,6 +356,13 @@
         background-color: coral;
         border-radius: 6px;
     }
+    .registerUser {
+        width: 100px;
+        height: 35px;
+        font-size: 14px;
+        background-color: coral;
+        border-radius: 6px;
+    }
 
     .priceWithButton {
         display: flex;
@@ -348,11 +379,6 @@
     }
     .slider-form{
         display: inline-block;
-    }
-    .priceSlider{
-        display: inline-block;
-        font-size: 26px;
-        border: 1px;
     }
 
 </style>

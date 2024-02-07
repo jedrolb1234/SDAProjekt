@@ -32,7 +32,7 @@ public class ProductDetailsController {
                                 @RequestParam(name = "quantity", required = false) Optional<Integer> quantity,
                                 @RequestParam(name = "product") int id) {
          service.setProductDetailMVC(session, model, product, cart, quantity, id);
-         String view = service.setViewToMVC(model, product, cart, id);
+         String view = service.setViewToMVC(model, session, product, cart, id);
          return view;
      }
 

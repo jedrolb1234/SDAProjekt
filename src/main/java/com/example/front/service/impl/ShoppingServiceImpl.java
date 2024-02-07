@@ -29,7 +29,6 @@ public class ShoppingServiceImpl implements ShoppingService {
                 .filter(p -> !p.getPicture().isEmpty())
                 .collect(Collectors.toList());
         cart = (List<ShoppingCart>) session.getAttribute("cart");
-        System.out.println(cart);
         if (cart == null) {
             cart = new ArrayList<>();}
         cartQuantity = 0;
@@ -48,6 +47,8 @@ public class ShoppingServiceImpl implements ShoppingService {
         }catch(Exception e){
             logged = false;
         }
+        boolean admin = (boolean) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
     }
     @Override
@@ -75,8 +76,10 @@ public class ShoppingServiceImpl implements ShoppingService {
         }catch(Exception e){
             logged = false;
         }
+        boolean admin = (boolean) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
-    };
+    }
 
     public void setMVCFilteredByPrice(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
                                       int cartQuantity, int sumPrice, Optional<Integer> category, int price){
@@ -112,7 +115,9 @@ public class ShoppingServiceImpl implements ShoppingService {
             logged = false;
         }
         model.addAttribute("ifLogged", logged);
-    };
+        boolean admin = (boolean) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
+    }
     @Override
     public void setCart(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice,
                         int category, int quantity, int id, Optional<String> name){
@@ -155,5 +160,7 @@ public class ShoppingServiceImpl implements ShoppingService {
             logged = false;
         }
         model.addAttribute("ifLogged", logged);
+        boolean admin = (boolean) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
     }
 }

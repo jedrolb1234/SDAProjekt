@@ -38,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> getByPriceAndCategory(int price, int category){
         return repository.findProductsByPriceAndCategory(price, category);
     }
+
     @Override
     public List<ProductEntity> getByCategory(int category){
         return repository.findProductsByCategory(category);

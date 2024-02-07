@@ -22,8 +22,12 @@
     <form th:unless="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logIn}">
         <button  class="logInButton">zaloguj się</button>
     </form>
-
-    <form th:action="@{/basket}" method="get">
+    <form class="logFormButton" th:if="${ifLogged}"  method="get" th:action="@{/account/settings}">
+        <button class="goToSettings">
+            <span class="material-symbols-outlined">settings</span>
+        </button>
+    </form>
+    <form th:if="${ifLogged}" th:action="@{/basket}" method="get">
         <button type="submit" class="goToBasket">
             <span class="material-symbols-outlined">shopping_cart</span>
             <p class="shoppingBasket" th:text="${cartQuantity}"></p>
@@ -33,7 +37,12 @@
 </header>
 <div class="layout">
     <span class="category-list">
-        <h2 class="listHeader">Asortyment</h2>
+        <form class="list-form" th:if="${admin}" method="get" th:action="@{/admin/}">
+            <button class="linkButton">PANEL ADMNITATORA</button><hr>
+        </form>
+        <form class="list-form" method="get" th:action="@{/}">
+            <button class="linkButton-header">ASORTYMENT</button><hr>
+        </form>
         <form class="list-form" method="get" th:action="@{/shopping/schoolarticles}">
             <button class="linkButton">Artykuły szkolne</button><hr>
         </form>
@@ -82,7 +91,7 @@
                     <h1 class="productName" th:text="${product.name}"></h1>
                         <div class="basket">
                             <span class="bigPrice" th:text="${product.price}"></span><span class="bigPrice" >zł</span>
-                            <form class="generalBasket" method="get" th:action="@{/productDetail/addToCart}">
+                            <form  th:if="${ifLogged}"  class="generalBasket" method="get" th:action="@{/productDetail/addToCart}">
                                 <select class="numberOfProducts" name="quantity" id="quantity">
                                     <option value=1>1</option>
                                     <option value=2>2</option>
@@ -121,6 +130,9 @@
         crossorigin="anonymous"></script>
 
 <style>
+    body {
+        text-align: center;
+    }
     header {
         width: 1300px;
         display: flex;
@@ -144,9 +156,11 @@
     }
 
     .searchForm {
-        margin-left: 150px;
-        margin-right: 0;
-        width: 550px;
+        margin-left: 50px;
+        margin-right: 100px;
+        width: 450px; !important
+    padding 0;
+        box-sizing: border-box;
     }
 
     .searchInput {
@@ -157,17 +171,19 @@
         /*padding-left: 10px;*/
         border-radius:  10px 0 0 10px;
         margin: 0 0 0 0;
+        box-sizing: border-box;
     }
 
     .searchButton {
         width: 50px;
-        height: 55px;
-        margin: 6px 0 0 -5px;
+        height: 50px;
+        margin: 9px 0 0 -5px;
         border-radius: 0 10px 10px 0;
         border-width: 2px;
         padding: 0;
+        box-sizing: border-box;
+        justify-items: center;
     }
-
 
     .ownerInfo {
         padding-top: 20px;
@@ -183,21 +199,29 @@
     .goToBasket{
         background-color: white;
         border: none;
-        width:  200px;
+        width:  140px;
         height:  60px;
         display: inline-block;
-        margin-left:100px;
+        margin-left:120px;
     }
     .goToBasket:hover{
         cursor: pointer;
     }
-    .basketForm{
-        margin-left: 0;
-    }
+
     .actualPayment {
         font-size: 28px;
-        /*margin-top: 8px;*/
         display: inline-block;
+    }
+    .goToSettings{
+        background-color: white;
+        border: none;
+        width:  50px;
+        height:  60px;
+        display: inline-block;
+        margin-left:120px;
+    }
+    .goToSettings:hover{
+        cursor: pointer;
     }
 
     .material-symbols-outlined {
@@ -214,8 +238,9 @@
     }
 
     .logFormButton {
-        padding-left: 100px;
+        padding-left: 10px;
         margin-top:10px;
+        margin-left: 0;
     }
 
     .layout {
@@ -230,6 +255,7 @@
         /*padding-top: 50px;*/
         width: 300px;
         font-size: 22px;
+        text-align: center;
     }
 
     hr {
@@ -252,9 +278,15 @@
         font-size: 24px;
         border-width: 0;
     }
+    .linkButton-header{
+        font-weight: bold;
+        background-color: white;
+        color: black;
+        font-size: 24px;
+        border-width: 0;
+    }
 
-
-    .linkButton:hover {
+    .linkButton:hover, .linkButton-header:hover {
         background-color: coral;
         border-radius: 8px;
     }

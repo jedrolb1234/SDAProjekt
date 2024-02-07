@@ -11,6 +11,6 @@ import java.util.List;
 public interface IndexService {
 
     void setIndexMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int sumPrice, int cartQuantity);
-
+    void setLogOutPage(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int sumPrice, int cartQuantity);
 
 }

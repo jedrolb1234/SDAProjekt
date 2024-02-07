@@ -30,10 +30,11 @@ public class ProductDetailServiceImpl implements ProductDetailService {
          boolean logged;
          try {
              logged = (boolean) session.getAttribute("logged");
-         } catch (Exception e) {
+         }catch(Exception e){
              logged = false;
          }
          model.addAttribute("ifLogged", logged);
+
          if (cart == null) {
              cart = new ArrayList<>();
          }
@@ -56,6 +57,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
              model.addAttribute("sumPrice", 0);
              model.addAttribute("cartQuantity", 0);
          }
+         boolean admin = (boolean) session.getAttribute("admin");
+         model.addAttribute("admin", admin);
      }
 
 
@@ -65,12 +68,13 @@ public class ProductDetailServiceImpl implements ProductDetailService {
                                      int quantity, int id){
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         boolean logged;
-            try {
+        try {
             logged = (boolean) session.getAttribute("logged");
         }catch(Exception e){
             logged = false;
         }
-            model.addAttribute("ifLogged", logged);
+        model.addAttribute("ifLogged", logged);
+
             if (cart == null) {
             cart = new ArrayList<>();}
         ShoppingCart productWithQuantity = new ShoppingCart();
@@ -79,7 +83,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             cart.add(productWithQuantity);
         cartQuantity = 0;
         sumPrice = 0;
-            if(cart != null) {
+        if(cart != null) {
             for (ShoppingCart sc : cart) {
                 cartQuantity += sc.getQuantity();
                 sumPrice += sc.getQuantity() * repository.getProductByProductId(sc.getProduct()).get().getPrice();
@@ -97,10 +101,14 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             model.addAttribute("cart", cart);
         }
         session.setAttribute("cart", cart);
+        boolean admin = (boolean) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
     }
 
-    public String setViewToMVC(Model model, List<ProductEntity> product, List<ShoppingCart> cart, int id){
+    public String setViewToMVC(Model model, HttpSession session, List<ProductEntity> product, List<ShoppingCart> cart, int id){
         Optional<ProductEntity> productOptional = repository.getProductByProductId(id);
+        boolean admin = (boolean) session.getAttribute("admin");
+        model.addAttribute("admin", admin);
         if(productOptional.isPresent()) {
             ProductEntity productO = productOptional.get();
             model.addAttribute("product", productO);

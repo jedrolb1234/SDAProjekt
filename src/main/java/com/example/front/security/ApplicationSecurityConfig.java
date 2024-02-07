@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -37,18 +38,13 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests() // deklarujemy że zadania muszą byc autoryzowane
-                    .antMatchers("/shopping/addToCart/**")
-                    .authenticated()
-                //permitAll()
-//                    .antMatchers("/shopping/addToCart", "/basket")
-//                        .hasRole(CLIENT_GUEST.name())
-//                    .hasAnyAuthority("user:client", "user:register", "user:admin")
-//                        .expressionHandler()
-//                    .antMatchers("/shopping/addToCart", "/basket")
-//                        .hasRole(ADMIN.name())
+                    .antMatchers("/shopping/addToCart", "/basket")
+                        .hasAnyAuthority(CLIENT.name(), ADMIN.name())
+                    .antMatchers( "/admin**")
+                        .hasAuthority(ADMIN.name())
                     .antMatchers("/", "/index","/user/logOut", "/user/logIn",
                             "/shopping/**","/productDetail/**","/Img/Obrazy/**",
-                            "/returnToShopping", "/admin**") // część naszej białej listy
+                            "/returnToShopping") // część naszej białej listy
                     .permitAll()// kolejna część białej listy
 //                    .anyRequest().authenticated()//.permitAll()// //.
 //                .and()
@@ -69,13 +65,23 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .rememberMeParameter("remember-me")
                 .and()
                     .logout()
-                    .logoutUrl("/logout")
+                    .logoutUrl("/user/logOut")
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
                     .logoutSuccessUrl("/login");
+//                .and()
+//                    .exceptionHandling()//.accessDeniedPage("/account/register");
+//                    .accessDeniedHandler(accessDeniedHandler());
     }
+
+//    private AccessDeniedHandler accessDeniedHandler() {
+//        return (request, response, accessDeniedException) -> {
+//                response.sendRedirect("/index");
+//        };
+//    }
+
 
     @Bean
     public AuthenticationSuccessHandler addLogParameter() {

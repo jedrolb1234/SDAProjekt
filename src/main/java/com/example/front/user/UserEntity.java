@@ -1,9 +1,11 @@
 package com.example.front.user;
 
+import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +17,8 @@ public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(unique = true)
+    @NotBlank
     private String username;
     private String password;
     //    private final Set<? extends GrantedAuthority> grantedAuthorities;
@@ -45,13 +49,13 @@ public class UserEntity implements UserDetails {
         this.isEnabled = isEnabled;
     }
 
-    public UserEntity(long id, String username, String password, Set<Authority> authorities, String phone, String email, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
+    public UserEntity(long id, String username, String password, String phone, String email, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.authorities = authorities;
+
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
@@ -60,17 +64,6 @@ public class UserEntity implements UserDetails {
 
     public UserEntity() {
     }
-
-    public void addAuthority(Authority authority) {
-        authorities.add(authority);
-        authority.getUsers().add(this);
-    }
-
-    public void removeAuthority(Authority authority) {
-        authorities.remove(authority);
-        authority.getUsers().remove(this);
-    }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

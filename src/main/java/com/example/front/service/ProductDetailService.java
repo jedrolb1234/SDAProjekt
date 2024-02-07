@@ -15,5 +15,5 @@ public interface ProductDetailService {
     void setProductDetailMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
                              Optional<Integer> quantity, int id);
 
-    String setViewToMVC(Model model, List<ProductEntity> product, List<ShoppingCart> cart, int id);
+    String setViewToMVC(Model model,HttpSession session, List<ProductEntity> product, List<ShoppingCart> cart, int id);
 }

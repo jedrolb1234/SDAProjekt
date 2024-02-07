@@ -2,46 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Settings</title>
 </head>
 <body>
 <h1>Paddington</h1>
-<h2>Formularz rejestracji</h2>
-<form th:action="@{/account/register}" method="POST">
+<h2>Ustaw swoje dane</h2>
+<form th:action="@{/account/seavUser}" method="POST">
     <div>
         <input type="text" id="username" name="username" placeholder="Nazwa użytkownika" required>
     </div>
-    <div th:if="${error0}" class="error" th:text="${error0}"></div>
     <div>
-        <input type="password" id="password" name="password" placeholder="Hasło" required pattern="^[A-Za-z\d@$!%*?&]{8,}$">
+        <input type="password" id="password" name="password" placeholder="Hasło" required
+               pattern="^[A-Za-z\d@$!%*?&]{8,}$">
     </div>
     <div>
         <input type="password" id="rpassword" name="rpassword" placeholder="Powtórz hasło" required>
     </div>
-    <div th:if="${error1}" class="error" th:text="${error1}"></div>
+    <div th:if="${error}" style="color: red" th:text="${error}"></div>
     <div>
         <input type="email" id="email" name="email" placeholder="Email" required>
     </div>
-        <div th:if="${error3}" class="error" th:text="${error3}"></div>
     <div>
         <input type="text" id="phone" name="phone" placeholder="Nr. telefonu" required pattern="\d{9}">
     </div>
-        <input type="checkbox" id="administratorCheckbox" name="administratorCheckbox" class="admin-box"
-               onchange="toogleInput() ">
-    <div>
-    <label for="administratorCheckbox">Zaznacz jeśli jesteś administratorem.</label>
-    </div>
-    <div>
-        <input type="password" id="admin-password" name="admin-password"
-               placeholder="Hasło administratora"
-               pattern="^[1][2][3][4][5][6][7]$">
-    </div>
-    <button type="submit">Zarejestruj</button>
+    <button type="submit">Zapisz zmiany</button>
+</form>
+<form class="logFormButton" method="get" th:action="@{/index}">
+    <button type="submit" class="backToShopping">Powrót do sklepu</button>
 </form>
 </body>
 </html>
+
 <script>
-    function toogleInput(){
+    function toogleInput() {
         const checkbox = document.getElementById('administratorCheckbox');
         var administrator = document.getElementById('admin-password');
         if (checkbox.checked) {
@@ -51,50 +44,63 @@
         }
     }
 </script>
+
 <style>
-    #admin-password{
-        display : none;
+    #admin-password {
+        display: none;
     }
-    body{
+
+    body {
         text-align: center;
         font-size: 28px;
     }
-    h1{
+
+    h1 {
         font-size: 44px;
         font-family: 'Satisfy';
         color: brown;
     }
-    input{
+
+    input {
         height: 30px;
         width: 300px;
         padding: 0 5px 0 5px;
         margin: 8px;
     }
-    .admin-box{
+
+    .admin-box {
         width: 50px;
     }
-    button{
+
+    button {
         display: inline-block;
         width: 150px;
-        height: 40px;
+        height: 80px;
         font-size: 28px;
         background-color: bisque;
     }
-    .error{
-        color: red;
-        font-size: 18px;
+    .backToShopping{
+        display: inline-block;
+        width: 250px;
+        height: 40px;
+        font-size: 28px;
+        margin-top: 20px;
+        background-color: bisque;
     }
-    .register{
+    .register {
         background-color: white;
         border: none;
     }
-    .register:hover{
-        cursor:pointer;
+
+    .register:hover {
+        cursor: pointer;
     }
-    .info1{
+
+    .info1 {
         display: inline-block;
     }
-    .form{
+
+    .form {
         display: inline-block;
     }
 </style>

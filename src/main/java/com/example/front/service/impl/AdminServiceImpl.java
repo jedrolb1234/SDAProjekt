@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl implements AdminService {
 
     UserRepository userRepository;
-
     AppRepository repository;
     List<UserEntity> users;
     private List<ShoppingCart> cart = new ArrayList<>();
@@ -44,7 +43,6 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void setAdminMVC(HttpSession session, Model model, List<ProductEntity> product, int cartQuantity,
                             int sumPrice) {
-        session.invalidate();
         product = repository.findAll()
                 .stream()
                 .filter(p -> !p.getPicture().isEmpty())
@@ -64,7 +62,6 @@ public class AdminServiceImpl implements AdminService {
 
     public void setDeleteProduct(HttpSession session, Model model, List<ProductEntity> product, long id){
         repository.deleteById(id);
-        session.invalidate();
         product = repository.findAll()
                 .stream()
                 .filter(p -> !p.getPicture().isEmpty())
@@ -109,7 +106,6 @@ public class AdminServiceImpl implements AdminService {
         }
     };
     public void setDeleteUserPageMVC(HttpSession session, Model model){
-        session.invalidate();
         users = userRepository.findAll();
         System.out.println(users.get(0));
         System.out.println(users.get(0).getAuthorities());
@@ -126,7 +122,6 @@ public class AdminServiceImpl implements AdminService {
     public void deleteUserByIdMVC(HttpSession session, Model model, long user){
         userRepository.deleteById(user);
         users = userRepository.findAll();
-//        System.out.println(users.get(0));
         System.out.println(users.get(0).getAuthorities());
         boolean logged;
         try {
@@ -141,7 +136,6 @@ public class AdminServiceImpl implements AdminService {
 
     public void setDeleteUserByName(HttpSession session, Model model, String username){
         users = userRepository.findByName(username);
-        session.invalidate();
         boolean logged;
         try {
             logged = (boolean) session.getAttribute("logged");
@@ -157,6 +151,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             logged = (boolean) session.getAttribute("logged");
         }catch(Exception e){
+            logged = false;
             logged = false;
         }
         model.addAttribute("ifLogged", logged);

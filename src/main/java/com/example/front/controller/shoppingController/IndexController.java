@@ -25,30 +25,17 @@ public class IndexController {
     private int sumPrice;
     private int cartQuantity;
 
-    @GetMapping("/")
+    @GetMapping({"/",})
     public String home(HttpSession session, Model model) {
         service.setIndexMVC(session, model, product, cart, sumPrice, cartQuantity);
         return "/index";
     }
 
 //    @GetMapping("/user/logOut")
-//    public String logOut(HttpSession session, Model model) {
-//        session.invalidate();
-//        product = repository.findAll();
-//        cartQuantity = 0;
-//        sumPrice = 0;
-//        boolean logged;
-//        try {
-//            logged = (boolean) session.getAttribute("logged");
-//        }catch(Exception e){
-//            logged = false;
-//        }
-//        model.addAttribute("ifLogged", logged);
-//        model.addAttribute("sumPrice", 0);
-//        model.addAttribute("cartQuantity", 0);
-//        model.addAttribute("productList", product);
-//        return "/index";
-//    }
+    public String logOut(HttpSession session, Model model) {
+        service.setLogOutPage(session, model, product, cart, sumPrice, cartQuantity);
+        return "/index";
+    }
     @GetMapping("/index")
     public String paddington(HttpSession session, Model model) {
         service.setIndexMVC(session, model, product, cart, sumPrice, cartQuantity);
