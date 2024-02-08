@@ -70,7 +70,9 @@ public class IndexServiceImpl implements IndexService {
     }
     public void setLogOutPage(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int sumPrice, int cartQuantity){
         session.invalidate();
-        product = repository.findAll();
+        product = repository.findAll().stream()
+                .filter(p -> !p.getPicture().isEmpty())
+                .collect(Collectors.toList());;
         cartQuantity = 0;
         sumPrice = 0;
         boolean logged;

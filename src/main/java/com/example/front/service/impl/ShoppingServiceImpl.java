@@ -120,7 +120,7 @@ public class ShoppingServiceImpl implements ShoppingService {
     }
     @Override
     public void setCart(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice,
-                        int category, int quantity, int id, Optional<String> name){
+                        Optional<Integer> category, int quantity, int id, Optional<String> name){
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();}
@@ -145,10 +145,22 @@ public class ShoppingServiceImpl implements ShoppingService {
             model.addAttribute("cartQuantity", 0);
         }
         if(name.isEmpty()) {
-                product = repository.findProductsByCategory(category);
+            if(category.isEmpty()){
+                product = repository.findAll().stream()
+                    .filter(p -> !p.getPicture().isEmpty())
+                    .collect(Collectors.toList());}
+            else {product = repository.findProductsByCategory(category.get()).stream()
+                    .filter(p -> !p.getPicture().isEmpty())
+                    .collect(Collectors.toList());;}
         }else {
-            if (name.isPresent())
-                product = repository.findProductsByName(name.get());
+            if(category.isPresent()){
+                product = repository.findProductsByNameAndCategory(name.get(), category.get()).stream()
+                    .filter(p -> !p.getPicture().isEmpty())
+                    .collect(Collectors.toList());;}
+            else
+            {product = repository.findProductsByName(name.get()).stream()
+                        .filter(p -> !p.getPicture().isEmpty())
+                        .collect(Collectors.toList());}
         }
         model.addAttribute("productList", product);
         model.addAttribute("category", category);

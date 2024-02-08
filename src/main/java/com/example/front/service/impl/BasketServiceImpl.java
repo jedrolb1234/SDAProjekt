@@ -27,7 +27,13 @@ public class BasketServiceImpl implements BasketService {
             cart = new ArrayList<>();
         }
         List<ShoppingSummary> shop = new ArrayList<>();
-
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
         ProductEntity p;
         int i = 1;
         int cartQuantity = 0;

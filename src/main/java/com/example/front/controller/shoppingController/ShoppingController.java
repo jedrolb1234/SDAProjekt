@@ -80,7 +80,7 @@ public class ShoppingController {
 
     @GetMapping("edutoys")
     public String eduToys(HttpSession session, Model model) {
-        shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 12);
+        shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 10);
 
         return "/index";
     }
@@ -119,7 +119,7 @@ public class ShoppingController {
     }
 
     @GetMapping("/addToCart")
-    public String addToCart(HttpSession session, Model model, @RequestParam(name = "category") int category,
+    public String addToCart(HttpSession session, Model model, @RequestParam(name = "category", required = false) Optional<Integer> category,
                             @RequestParam(name = "quantity") int quantity, @RequestParam(name = "product") int id,
                             @RequestParam(name = "name", required = false) Optional<String> name){
         shoppingService.setCart(session, model, product, cart, cartQuantity, sumPrice, category, quantity,id, name);

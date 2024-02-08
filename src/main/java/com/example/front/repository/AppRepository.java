@@ -22,5 +22,7 @@ public interface AppRepository extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findProductsByCategory(int category);
     @Query("SELECT e FROM ProductEntity e WHERE e.name LIKE %:name%")
     List<ProductEntity> findProductsByName(String name);
+    @Query("SELECT e FROM ProductEntity e WHERE e.name LIKE %:name% and e.category = :category")
+    List<ProductEntity>findProductsByNameAndCategory(String name, int category);
 
 }
