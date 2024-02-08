@@ -27,16 +27,21 @@
             <span class="material-symbols-outlined">settings</span>
         </button>
     </form>
+    <form class="logFormButton" th:if="${!ifLogged}"  method="get" th:action="@{/user/registerPage}">
+        <button title="Zarejestruj się." class="goToSettings">
+            <span class="material-symbols-outlined">Apps</span>
+        </button>
+    </form>
     <form th:if="${ifLogged}" th:action="@{/basket}" method="get">
         <button type="submit" class="goToBasket">
             <span class="material-symbols-outlined">shopping_cart</span>
-            <p class="shoppingBasket" th:text="${cartQuantity}"></p>
-            <p class="actualPayment" th:text="${sumPrice}"></p>
+            <a class="shoppingBasket" th:text="${cartQuantity}"></a>
+            <a class="actualPayment" th:text="${sumPrice}"></a>
         </button>
     </form>
 </header>
 <div class="layout">
-    <span class="category-list">
+    <div class="category-list">
         <form class="list-form" th:if="${admin}" method="get" th:action="@{/admin/}">
             <button class="linkButton">PANEL ADMNITATORA</button><hr>
         </form>
@@ -79,7 +84,7 @@
         <form class="list-form" method="get" th:action="@{/shopping/schoolarticles}">
             <button class="linkButton">Atykuły szkolne</button><hr>
         </form>
-    </span>
+    </div>
     <span class="container">
         <div class="group">
             <div class="bigPicture" th:style="'background-image: url(\'' + ${product.picture[0].path} + '\');'"></div>
@@ -91,7 +96,7 @@
                     <h1 class="productName" th:text="${product.name}"></h1>
                         <div class="basket">
                             <span class="bigPrice" th:text="${product.price}"></span><span class="bigPrice" >zł</span>
-                            <form  th:if="${ifLogged}"  class="generalBasket" method="get" th:action="@{/productDetail/addToCart}">
+                            <form class="generalBasket" method="get" th:action="@{/productDetail/addToCart}">
                                 <select class="numberOfProducts" name="quantity" id="quantity">
                                     <option value=1>1</option>
                                     <option value=2>2</option>
@@ -101,7 +106,8 @@
                                 </select>
                                 <input type="hidden" name="product" th:value="${product.id}" >
                                 <input type="hidden" name="category" id="cat" th:value="${product.category}">
-                                <button class="addToCart">Dodaj</button>
+                                <button th:if="${ifLogged}" type="submit" class="addToCart">Dodaj</button>
+                                <button th:unlses="${ifLogged}" title="Musisz być zarejestrowany aby dokonać zakupów." th:unless="${ifLogged}" type="reset" class="addToCart">Dodaj</button>
                             </form>
                         </div>
                     <span class="warranty">Gwarancja </span><span class="warranty" th:text="${product.warranty}"></span><span class="warranty"> miesiące</span>

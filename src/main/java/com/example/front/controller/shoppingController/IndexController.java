@@ -31,11 +31,6 @@ public class IndexController {
         return "/index";
     }
 
-//    @GetMapping("/user/logOut")
-    public String logOut(HttpSession session, Model model) {
-        service.setLogOutPage(session, model, product, cart, sumPrice, cartQuantity);
-        return "/index";
-    }
     @GetMapping("/index")
     public String paddington(HttpSession session, Model model) {
         service.setIndexMVC(session, model, product, cart, sumPrice, cartQuantity);

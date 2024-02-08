@@ -39,17 +39,13 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests() // deklarujemy że zadania muszą byc autoryzowane
                     .antMatchers("/shopping/addToCart", "/basket")
-                        .hasAnyAuthority(CLIENT.name(), ADMIN.name())
+                        .hasAnyRole(CLIENT.name(), ADMIN.name())
                     .antMatchers( "/admin**")
                         .hasAuthority(ADMIN.name())
-                    .antMatchers("/", "/index","/user/logOut", "/user/logIn",
+                    .antMatchers("/", "/index","/user**", "/account**",
                             "/shopping/**","/productDetail/**","/Img/Obrazy/**",
                             "/returnToShopping") // część naszej białej listy
                     .permitAll()// kolejna część białej listy
-//                    .anyRequest().authenticated()//.permitAll()// //.
-//                .and()
-//                    .exceptionHandling()
-//                    .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
                 .formLogin()
                     .loginPage("/user/validateUser")
@@ -70,17 +66,17 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
-                    .logoutSuccessUrl("/login");
-//                .and()
-//                    .exceptionHandling()//.accessDeniedPage("/account/register");
-//                    .accessDeniedHandler(accessDeniedHandler());
+                    .logoutSuccessUrl("/login")
+                .and()
+                    .exceptionHandling()//.accessDeniedPage("/account/register");
+                    .accessDeniedHandler(accessDeniedHandler());
     }
 
-//    private AccessDeniedHandler accessDeniedHandler() {
-//        return (request, response, accessDeniedException) -> {
-//                response.sendRedirect("/index");
-//        };
-//    }
+    private AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+                response.sendRedirect("/index");
+        };
+    }
 
 
     @Bean

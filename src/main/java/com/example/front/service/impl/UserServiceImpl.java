@@ -89,6 +89,13 @@ public class UserServiceImpl implements UserService {
             anyError = true;
         }
 //zrobić cos z hasłem admina
+        Set<Authority> grantedAuthority = new HashSet<>();
+// Jeśli admin jest włączony
+        if (admin.isPresent()) {
+            grantedAuthority.add(new Authority( "ADMIN"));
+        } else {
+            grantedAuthority.add(new Authority( "CLIENT"));
+        }
 
 
         if (!anyError) {
@@ -168,23 +175,8 @@ public class UserServiceImpl implements UserService {
             } else {
                 grantedAuthority.add(new Authority("CLIENT"));
             }
-
         }
 
-        product = repository.findAll()
-                .stream()
-                .filter(p -> !p.getPicture().isEmpty())
-                .collect(Collectors.toList());
-        cartQuantity = 0;
-        sumPrice = 0;
-
-        model.addAttribute("ifLogged", logged);
-        model.addAttribute("sumPrice", 0);
-        model.addAttribute("cartQuantity", 0);
-        model.addAttribute("productList", product);
-        model.addAttribute("admin", admin);
-        session.setAttribute("cart", new ArrayList<>());
-        session.setAttribute("admin", admin);
 
         if (!anyError) {
             UserEntity applicationUser = new UserEntity(
@@ -199,10 +191,27 @@ public class UserServiceImpl implements UserService {
                     true
             );
             applicationUser.setAuthorities(grantedAuthority);
+            System.out.println("save");
 
             userRepository.save(applicationUser);
-            return "/";
+
+            product = repository.findAll()
+                    .stream()
+                    .filter(p -> !p.getPicture().isEmpty())
+                    .collect(Collectors.toList());
+            cartQuantity = 0;
+            sumPrice = 0;
+
+            model.addAttribute("ifLogged", logged);
+            model.addAttribute("sumPrice", 0);
+            model.addAttribute("cartQuantity", 0);
+            model.addAttribute("productList", product);
+            model.addAttribute("admin", admin);
+            session.setAttribute("cart", new ArrayList<>());
+            session.setAttribute("admin", admin);
+            return "/index";
         }
-        return "/account/register";
+        System.out.println("BLAD");
+        return "/account/settings";
     }
 }

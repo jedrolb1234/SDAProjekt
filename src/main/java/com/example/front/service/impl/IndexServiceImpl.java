@@ -60,7 +60,6 @@ public class IndexServiceImpl implements IndexService {
 //            System.out.println(auth.contains("ROLE_ADMIN"));
             admin = auth.contains("ROLE_ADMIN");
         }
-        System.out.println(admin + auth.toString());
         model.addAttribute("ifLogged", logged);
         model.addAttribute("sumPrice", 0);
         model.addAttribute("cartQuantity", 0);
@@ -68,7 +67,7 @@ public class IndexServiceImpl implements IndexService {
         model.addAttribute("admin", admin);
         session.setAttribute("cart", new ArrayList<>());
         session.setAttribute("admin", admin);
-    };
+    }
     public void setLogOutPage(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int sumPrice, int cartQuantity){
         session.invalidate();
         product = repository.findAll();

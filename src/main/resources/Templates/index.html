@@ -26,19 +26,23 @@
             <span class="material-symbols-outlined">settings</span>
         </button>
     </form>
-
-    <form th:if="${ifLogged}" th:action="@{/basket}" method="get" class="basketForm">
+    <form class="logFormButton" th:if="${!ifLogged}"  method="get" th:action="@{/user/registerPage}">
+        <button title="Zarejestruj się." class="goToSettings">
+            <span class="material-symbols-outlined">Apps</span>
+        </button>
+    </form>
+<!--    th:if="${ifLogged}"-->
+    <form  th:action="@{/basket}" method="get" class="basketForm">
         <button type="submit" class="goToBasket">
             <span class="material-symbols-outlined">shopping_cart</span>
-            <p class="shoppingBasket" th:text="${cartQuantity}"></p>
-            <p class="actualPayment" th:text="${sumPrice}"></p>
+            <a class="shoppingBasket" th:text="${cartQuantity}"></a>
+            <a class="actualPayment" th:text="${sumPrice}"></a>
         </button>
     </form>
 </header>
 <div class="layout">
 
-    <span class="category-list">
-        <!--        dodać th:if jeśli jestes administratorem-->
+    <div class="category-list">
         <form class="list-form" th:if="${admin}" method="get" th:action="@{/admin/}">
             <button class="linkButton">PANEL ADMNITATORA</button><hr>
         </form>
@@ -78,7 +82,7 @@
         <form class="list-form" method="get" th:action="@{/shopping/others}">
             <button class="linkButton">Pozostałe</button><hr>
         </form>
-    </span>
+    </div>
     <span class="container">
         <div class="slider">
             <label for="priceRange" class="priceLabel">Wybierz maksymalna cenę:</label>
@@ -105,8 +109,8 @@
                     <input type="hidden" name="category" id="cat" th:value="${pl.category}">
                     <button class="addToCartButton">Dodaj</button>
                 </form>
-                <form th:if="${!ifLogged}"  class="productButtonSmall" th:action="@{/user/registerPage}" method="get">
-                    <button class="registerUser">Zarejestruj się</button>
+                <form th:unless="${ifLogged}" class="smallPrice">
+                    <button title="Musisz być zarejestrowany aby dokonać zakupów." class="registerUser">Dodaj</button>
                 </form>
             </div>
         </span>
@@ -208,6 +212,19 @@
         margin-left:120px;
     }
     .goToBasket:hover{
+        cursor: pointer;
+    }
+    .goToBasket1{
+        background-color: white;
+        opacity: 0.9;
+        border: none;
+        width:  140px;
+        height:  60px;
+        display: inline-block;
+        margin-left:120px;
+
+    }
+    .goToBasket1:hover{
         cursor: pointer;
     }
 
@@ -342,7 +359,7 @@
     .productButtonSmall {
         display: inline-block;
         box-sizing: border-box;
-        display: flex;
+        /*display: flex;*/
         justify-content: space-between; /* Rozdziel przestrzeń między elementami, przesuwając elementy na krańce kontenera */
         align-items: center;
         margin-left: auto;
@@ -357,9 +374,10 @@
         border-radius: 6px;
     }
     .registerUser {
-        width: 100px;
-        height: 35px;
-        font-size: 14px;
+        width: 80px;
+        opacity: 0.6;
+        font-size:22px;
+        height: 30px;
         background-color: coral;
         border-radius: 6px;
     }

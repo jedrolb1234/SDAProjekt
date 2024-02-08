@@ -19,6 +19,7 @@
         <input type="password" id="rpassword" name="rpassword" placeholder="Powtórz hasło" required>
     </div>
     <div th:if="${error1}" class="error" th:text="${error1}"></div>
+    <div th:if="${error2}" class="error" th:text="${error2}"></div>
     <div>
         <input type="email" id="email" name="email" placeholder="Email" required>
     </div>

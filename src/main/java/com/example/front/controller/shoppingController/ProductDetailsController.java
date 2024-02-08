@@ -39,7 +39,7 @@ public class ProductDetailsController {
 
     @GetMapping("/addToCart")
     public String addToCart(HttpSession session, Model model, @RequestParam(name = "category") int category,
-                            @RequestParam(name = "quantity") int quantity, @RequestParam(name = "product") int id){
+                            @RequestParam(name = "quantity") int quantity, @RequestParam(name = "product") int id) {
         service.setAddToCartMVC(session, model, product, cart, quantity, id);
         return "/productInfo";
     }

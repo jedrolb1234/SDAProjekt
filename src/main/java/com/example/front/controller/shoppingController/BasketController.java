@@ -24,9 +24,6 @@ public class BasketController {
     BasketService service;
 
     @GetMapping
-//    @PreAuthorize("hasAnyRole('ROLE_CLIENT', 'ROLE_ADMIN', 'CLIENT', 'ADMIN', 'user:register', 'user:admin')")
-//    @PreAuthorize("hasAnyAuthority('user:register', 'user:admin')")
-//    @PreAuthorize("hasAnyAuthority('user:client', 'user:register', 'user:admin')")
     public String basket(HttpSession session, Model model) {
         service.setBasketMVC(session, model);
 

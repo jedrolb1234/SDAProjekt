@@ -7,21 +7,24 @@
 <body>
 <h1>Paddington</h1>
 <h2>Ustaw swoje dane</h2>
-<form th:action="@{/account/seavUser}" method="POST">
+<form th:action="@{/account/saveUser}" method="get">
     <div>
         <input type="text" id="username" name="username" placeholder="Nazwa użytkownika" required>
     </div>
+    <div th:if="${error0}" class="error" th:text="${error0}"></div>
     <div>
-        <input type="password" id="password" name="password" placeholder="Hasło" required
-               pattern="^[A-Za-z\d@$!%*?&]{8,}$">
+        <input type="password" id="password" name="password" placeholder="Hasło" required pattern="^[A-Za-z\d@$!%*?&]{8,}$">
     </div>
     <div>
         <input type="password" id="rpassword" name="rpassword" placeholder="Powtórz hasło" required>
     </div>
-    <div th:if="${error}" style="color: red" th:text="${error}"></div>
+    <div th:if="${error1}" class="error" th:text="${error1}"></div>
+    <div>
+        <div th:if="${error2}" class="error" th:text="${error2}"></div>
     <div>
         <input type="email" id="email" name="email" placeholder="Email" required>
     </div>
+    <div th:if="${error3}" class="error" th:text="${error3}"></div>
     <div>
         <input type="text" id="phone" name="phone" placeholder="Nr. telefonu" required pattern="\d{9}">
     </div>

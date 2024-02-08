@@ -130,7 +130,7 @@ public class ShoppingServiceImpl implements ShoppingService {
         cart.add(productWithQuantity);
         cartQuantity = 0;
         sumPrice = 0;
-
+        System.out.println(cart.toString());
         if(cart != null) {
             for (ShoppingCart sc : cart) {
                 cartQuantity += sc.getQuantity();
