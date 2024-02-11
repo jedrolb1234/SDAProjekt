@@ -57,7 +57,12 @@ public class ProductDetailServiceImpl implements ProductDetailService {
              model.addAttribute("sumPrice", 0);
              model.addAttribute("cartQuantity", 0);
          }
-         boolean admin = (boolean) session.getAttribute("admin");
+         boolean admin;
+         try {
+             admin = (boolean) session.getAttribute("admin");
+         }catch(Exception e){
+             admin = false;
+         }
          model.addAttribute("admin", admin);
      }
 
@@ -101,13 +106,23 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             model.addAttribute("cart", cart);
         }
         session.setAttribute("cart", cart);
-        boolean admin = (boolean) session.getAttribute("admin");
+        boolean admin;
+        try {
+            admin = (boolean) session.getAttribute("admin");
+        }catch(Exception e){
+            admin = false;
+        }
         model.addAttribute("admin", admin);
     }
 
     public String setViewToMVC(Model model, HttpSession session, List<ProductEntity> product, List<ShoppingCart> cart, int id){
         Optional<ProductEntity> productOptional = repository.getProductByProductId(id);
-        boolean admin = (boolean) session.getAttribute("admin");
+        boolean admin;
+        try {
+            admin = (boolean) session.getAttribute("admin");
+        }catch(Exception e){
+            admin = false;
+        }
         model.addAttribute("admin", admin);
         if(productOptional.isPresent()) {
             ProductEntity productO = productOptional.get();

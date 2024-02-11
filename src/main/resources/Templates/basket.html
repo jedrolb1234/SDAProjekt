@@ -70,6 +70,14 @@
 </body>
 </html>
 <style>
+  body {
+    text-align: center;
+  }
+  /*header{*/
+  /*    display: flex; */
+  /*    justify-content: space-between;*/
+  /*    align-items: center;*/
+  /*}*/
   header {
     width: 1300px;
     display: flex;
@@ -93,9 +101,11 @@
   }
 
   .searchForm {
-    margin-left: 150px;
-    margin-right: 0;
-    width: 550px;
+    margin-left: 50px;
+    margin-right: 100px;
+    width: 450px; !important
+  padding 0;
+    box-sizing: border-box;
   }
 
   .searchInput {
@@ -106,17 +116,19 @@
     /*padding-left: 10px;*/
     border-radius:  10px 0 0 10px;
     margin: 0 0 0 0;
+    box-sizing: border-box;
   }
 
   .searchButton {
     width: 50px;
-    height: 55px;
-    margin: 6px 0 0 -5px;
+    height: 50px;
+    margin: 9px 0 0 -5px;
     border-radius: 0 10px 10px 0;
     border-width: 2px;
     padding: 0;
+    box-sizing: border-box;
+    justify-items: center;
   }
-
 
   .ownerInfo {
     padding-top: 20px;
@@ -132,19 +144,42 @@
   .goToBasket{
     background-color: white;
     border: none;
-    width:  200px;
+    width:  140px;
     height:  60px;
     display: inline-block;
-    margin-left:100px;
+    margin-left:120px;
   }
   .goToBasket:hover{
+    cursor: pointer;
+  }
+  .goToBasket1{
+    background-color: white;
+    opacity: 0.9;
+    border: none;
+    width:  140px;
+    height:  60px;
+    display: inline-block;
+    margin-left:120px;
+
+  }
+  .goToBasket1:hover{
     cursor: pointer;
   }
 
   .actualPayment {
     font-size: 28px;
-    /*margin-top: 8px;*/
     display: inline-block;
+  }
+  .goToSettings{
+    background-color: white;
+    border: none;
+    width:  50px;
+    height:  60px;
+    display: inline-block;
+    margin-left:120px;
+  }
+  .goToSettings:hover{
+    cursor: pointer;
   }
 
   .material-symbols-outlined {
@@ -161,8 +196,9 @@
   }
 
   .logFormButton {
-    padding-left: 100px;
+    padding-left: 10px;
     margin-top:10px;
+    margin-left: 0;
   }
 
   footer{

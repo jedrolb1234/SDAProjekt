@@ -86,9 +86,9 @@
     <span class="container">
         <div class="slider">
             <label for="priceRange" class="priceLabel">Wybierz maksymalna cenę:</label>
-            <form class="slider-form" method="get" th:action="@{/shopping/productFiltered}" th:value="${price}">
+            <form class="slider-form" method="get" th:action="@{/adaptation/searchbynameandprice}" th:value="${price}">
             <input type="range" id="priceRange" class="priceRange" name="price" min="0" max="1000" step="10">
-<!--            <input type="hidden" id="category" name="category" th:value="${category}">-->
+            <input type="hidden" id="name" class="priceRange" name="name" th:value="${name}">
             <button>Fltruj</button>
             </form>
             <p id="priceSlider" class="priceSlider"></p>

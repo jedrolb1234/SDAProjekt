@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +48,12 @@ public class ShoppingServiceImpl implements ShoppingService {
         }catch(Exception e){
             logged = false;
         }
-        boolean admin = (boolean) session.getAttribute("admin");
+        boolean admin;
+        try {
+            admin = (boolean) session.getAttribute("admin");
+        }catch(Exception e){
+            admin = false;
+        }
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
     }
@@ -70,13 +76,19 @@ public class ShoppingServiceImpl implements ShoppingService {
         model.addAttribute("sumPrice", sumPrice);
         model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
+        model.addAttribute("name", name);
         boolean logged;
         try {
             logged = (boolean) session.getAttribute("logged");
         }catch(Exception e){
             logged = false;
         }
-        boolean admin = (boolean) session.getAttribute("admin");
+        boolean admin;
+        try {
+            admin = (boolean) session.getAttribute("admin");
+        }catch(Exception e){
+            admin = false;
+        }
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
     }
@@ -114,13 +126,28 @@ public class ShoppingServiceImpl implements ShoppingService {
         }catch(Exception e){
             logged = false;
         }
-        model.addAttribute("ifLogged", logged);
         boolean admin = (boolean) session.getAttribute("admin");
-        model.addAttribute("admin", admin);
+        try {
+            admin = (boolean) session.getAttribute("admin");
+        }catch(Exception e){
+            admin = false;
+        }model.addAttribute("ifLogged", logged);
     }
     @Override
     public void setCart(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice,
                         Optional<Integer> category, int quantity, int id, Optional<String> name){
+//        String token = UUID.randomUUID().toString();
+//         List<String> tokens = (List<String>)session.getAttribute("tokens");
+//        if(tokens == null)
+//            tokens = new ArrayList<>();
+//
+//        if(tokens.contains(token)){
+//            return;
+//        }else {
+//            System.out.println("tokens \n"+ tokens.toString());
+//            tokens.add(token);
+//            session.setAttribute("tokens", tokens);
+//        }
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();}
@@ -172,7 +199,12 @@ public class ShoppingServiceImpl implements ShoppingService {
             logged = false;
         }
         model.addAttribute("ifLogged", logged);
-        boolean admin = (boolean) session.getAttribute("admin");
+        boolean admin;
+        try {
+            admin = (boolean) session.getAttribute("admin");
+        }catch(Exception e){
+            admin = false;
+        }
         model.addAttribute("admin", admin);
     }
 }

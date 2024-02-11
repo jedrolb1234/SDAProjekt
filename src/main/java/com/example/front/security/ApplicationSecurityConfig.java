@@ -41,10 +41,10 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/shopping/addToCart", "/basket")
                         .hasAnyRole(CLIENT.name(), ADMIN.name())
                     .antMatchers( "/admin**")
-                        .hasAuthority(ADMIN.name())
+                        .hasRole(ADMIN.name())
                     .antMatchers("/", "/index","/user**", "/account**",
                             "/shopping/**","/productDetail/**","/Img/Obrazy/**",
-                            "/returnToShopping") // część naszej białej listy
+                            "/returnToShopping","adaptation**") // część naszej białej listy
                     .permitAll()// kolejna część białej listy
                 .and()
                 .formLogin()

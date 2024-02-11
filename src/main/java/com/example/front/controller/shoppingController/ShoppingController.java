@@ -33,83 +33,79 @@ public class ShoppingController {
     @GetMapping("/schoolarticles")
     public String schoolArticles(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 1);
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("games")
     public String games(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 2);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("puzzle")
     public String puzzles(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 6);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("/mascots")
     public String mascots(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 4);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("/dolls")
     public String dolls(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 3);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("/cars")
     public String cars(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 7);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("/plasticstoys")
     public String plasticsToys(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 12);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("edutoys")
     public String eduToys(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 10);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("gardentoys")
     public String gardenToys(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 11);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("bathtoys")
     public String bathToys(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 9);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
 
     @GetMapping("others")
     public String others(HttpSession session, Model model) {
         shoppingService.setMVC( session, model, product, cart, cartQuantity, sumPrice, 5);
 
-        return "/index";
+        return "/indexAdaptation/categoryIndex";
     }
-    @GetMapping("searchbyname")
-    public String searchByName(HttpSession session, Model model, @RequestParam(name = "name") String name) {
-        shoppingService.setMVCByName(session, model, product, cart, cartQuantity, sumPrice, name);
-        return "/index";
-    }
+
 
     @GetMapping("/productFiltered")
     public String productFilteredByPrice(HttpSession session, Model model, @RequestParam(name = "price") int price,

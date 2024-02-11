@@ -1,5 +1,7 @@
 package com.example.front.user;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

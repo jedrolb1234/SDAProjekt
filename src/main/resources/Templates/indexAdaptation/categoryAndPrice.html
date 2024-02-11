@@ -11,8 +11,9 @@
 <body>
 <header>
     <h1 class="logo">Paddington</h1>
-    <form class="searchForm" th:action="@{/adaptation/searchbyname}" method="get">
+    <form class="searchForm" th:action="@{/adaptation/searchbynameandcategory}" method="get">
         <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
+        <input type="hidden" class="searchInput" placeholder="Szukaj" name="category" id="category" th:value="${category}">
         <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
     </form>
     <form th:if="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logOut}">
@@ -86,9 +87,10 @@
     <span class="container">
         <div class="slider">
             <label for="priceRange" class="priceLabel">Wybierz maksymalna cenę:</label>
-            <form class="slider-form" method="get" th:action="@{/shopping/productFiltered}" th:value="${price}">
+            <form class="slider-form" method="get" th:action="@{/adaptation/searchby3properties}" th:value="${price}">
             <input type="range" id="priceRange" class="priceRange" name="price" min="0" max="1000" step="10">
-<!--            <input type="hidden" id="category" name="category" th:value="${category}">-->
+            <input type="hidden" id="category" name="category" th:value="${category}">
+            <input type="hidden" id="category" name="category" th:value="${name}">
             <button>Fltruj</button>
             </form>
             <p id="priceSlider" class="priceSlider"></p>

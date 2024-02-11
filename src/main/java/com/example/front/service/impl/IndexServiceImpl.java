@@ -66,6 +66,7 @@ public class IndexServiceImpl implements IndexService {
         model.addAttribute("productList", product);
         model.addAttribute("admin", admin);
         session.setAttribute("cart", new ArrayList<>());
+        session.setAttribute("tokens", new ArrayList<>());
         session.setAttribute("admin", admin);
     }
     public void setLogOutPage(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int sumPrice, int cartQuantity){
