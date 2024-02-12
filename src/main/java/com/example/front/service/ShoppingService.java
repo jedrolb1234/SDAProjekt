@@ -11,6 +11,6 @@ public interface ShoppingService {
     void setMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice,int category);
     void setMVCByName(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice, String name);
     void setMVCFilteredByPrice(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice,  Optional<Integer> category, int price);
-    void setCart(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice, Optional<Integer> category, int quantity, int id, Optional<String> name);
+    void setCart(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice, Optional<Integer> category, int quantity, int id, Optional<String> name, String token);
 
 }

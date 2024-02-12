@@ -56,6 +56,8 @@ public class ShoppingServiceImpl implements ShoppingService {
         }
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
     }
     @Override
     public void setMVCByName(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
@@ -91,6 +93,8 @@ public class ShoppingServiceImpl implements ShoppingService {
         }
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
     }
 
     public void setMVCFilteredByPrice(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
@@ -132,38 +136,39 @@ public class ShoppingServiceImpl implements ShoppingService {
         }catch(Exception e){
             admin = false;
         }model.addAttribute("ifLogged", logged);
+        model.addAttribute("admin", admin);
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
     }
     @Override
     public void setCart(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice,
-                        Optional<Integer> category, int quantity, int id, Optional<String> name){
-//        String token = UUID.randomUUID().toString();
-//         List<String> tokens = (List<String>)session.getAttribute("tokens");
-//        if(tokens == null)
-//            tokens = new ArrayList<>();
-//
-//        if(tokens.contains(token)){
-//            return;
-//        }else {
-//            System.out.println("tokens \n"+ tokens.toString());
-//            tokens.add(token);
-//            session.setAttribute("tokens", tokens);
-//        }
+                        Optional<Integer> category, int quantity, int id, Optional<String> name, String token){
+
+        List<String> tokens = (List<String>)session.getAttribute("tokens");
+        if(tokens == null)
+            tokens = new ArrayList<>();
         cart = (List<ShoppingCart>) session.getAttribute("cart");
         if (cart == null) {
             cart = new ArrayList<>();}
         ShoppingCart productWithQuantity = new ShoppingCart();
         productWithQuantity.setQuantity(quantity);
         productWithQuantity.setProduct(id);
-        cart.add(productWithQuantity);
+
+        if(!tokens.contains(token)){
+            System.out.println("tokens \n"+ token);
+            tokens.add(token);
+            session.setAttribute("tokens", tokens);
+            token = UUID.randomUUID().toString();
+            model.addAttribute("token", token);
+            cart.add(productWithQuantity);
+        }
+
         cartQuantity = 0;
         sumPrice = 0;
-        System.out.println(cart.toString());
         if(cart != null) {
             for (ShoppingCart sc : cart) {
                 cartQuantity += sc.getQuantity();
                 sumPrice += sc.getQuantity() * repository.getProductByProductId(sc.getProduct()).get().getPrice();
-                System.out.println(sc);
-
             }
             model.addAttribute("sumPrice", sumPrice);
             model.addAttribute("cartQuantity", cartQuantity);

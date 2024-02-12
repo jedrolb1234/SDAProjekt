@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface BasketService {
     void setBasketMVC(HttpSession session, Model model);
+    void setNullToBasketMVC(HttpSession session, Model model);
 }

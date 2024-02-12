@@ -27,6 +27,10 @@ public class BasketController {
     public String basket(HttpSession session, Model model) {
         service.setBasketMVC(session, model);
 
+        return "/basket";}
+    @GetMapping("/emptyBasket")
+    public String emptyBasket(HttpSession session, Model model) {
+        service.setNullToBasketMVC(session, model);
         return "/basket";
 
     }

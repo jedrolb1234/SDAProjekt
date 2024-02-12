@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ProductDetailService {
     void setAddToCartMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
-                         int quantity, int id);
+                         int quantity, int id, String token);
 
     void setProductDetailMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
                              Optional<Integer> quantity, int id);

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -53,6 +54,8 @@ public class AdaptationServiceImpl implements AdaptationService {
         }
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
     }
     //ok
 public void setMVCByCategoryAndPrice(HttpSession session, Model model, java.util.List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice, int category, int price){
@@ -87,8 +90,11 @@ public void setMVCByCategoryAndPrice(HttpSession session, Model model, java.util
         }
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
     }
-public void setMVCByNameAndCategory(HttpSession session, Model model, java.util.List<ProductEntity> product, List<ShoppingCart> cart, int cartQuantity, int sumPrice, String name, int category){
+public void setMVCByNameAndCategory(HttpSession session, Model model, java.util.List<ProductEntity> product,
+                                    List<ShoppingCart> cart, int cartQuantity, int sumPrice, String name, int category){
         product = repository.findProductsByNameAndCategory(name, category)
                 .stream()
                 .filter(p -> !p.getPicture().isEmpty())
@@ -106,6 +112,7 @@ public void setMVCByNameAndCategory(HttpSession session, Model model, java.util.
         model.addAttribute("cartQuantity", cartQuantity);
         model.addAttribute("productList", product);
         model.addAttribute("category", category);
+        model.addAttribute("name", name);
         boolean logged;
         try {
             logged = (boolean) session.getAttribute("logged");
@@ -120,6 +127,8 @@ public void setMVCByNameAndCategory(HttpSession session, Model model, java.util.
         }
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
     }
 public void setMVCByNameAndPriceAndCategory(HttpSession session, Model model, java.util.List<ProductEntity> product,
                                             List<ShoppingCart> cart, int cartQuantity, int sumPrice, String name, int price,
@@ -156,6 +165,8 @@ public void setMVCByNameAndPriceAndCategory(HttpSession session, Model model, ja
         model.addAttribute("admin", admin);
         model.addAttribute("ifLogged", logged);
         model.addAttribute("name", name);
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
     }
 
 }

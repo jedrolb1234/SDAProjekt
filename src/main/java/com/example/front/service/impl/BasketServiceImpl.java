@@ -59,5 +59,23 @@ public class BasketServiceImpl implements BasketService {
         model.addAttribute("productList", shop);
     }
 
+    public void setNullToBasketMVC(HttpSession session, Model model){
+
+        List<ShoppingSummary> shop = new ArrayList<>();
+        session.setAttribute("cart", cart);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
+        model.addAttribute("ifLogged", logged);
+        ProductEntity p;
+        int i = 1;
+        int cartQuantity = 0;
+        int sumPrice = 0;
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
+    }
 
 }

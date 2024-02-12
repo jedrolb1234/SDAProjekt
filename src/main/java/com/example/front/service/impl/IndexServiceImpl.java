@@ -41,14 +41,23 @@ public class IndexServiceImpl implements IndexService {
                 .collect(Collectors.toList());
         cartQuantity = 0;
         sumPrice = 0;
-
+        cart = (List<ShoppingCart>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ArrayList<>();}
+        cartQuantity = 0;
+        sumPrice = 0;
+        for (ShoppingCart sc : cart) {
+            cartQuantity += sc.getQuantity();
+            sumPrice += sc.getQuantity() * repository.getProductByProductId(sc.getProduct()).get().getPrice();
+        }
+        model.addAttribute("sumPrice", sumPrice);
+        model.addAttribute("cartQuantity", cartQuantity);
         boolean logged;
         try {
             logged = (boolean) session.getAttribute("logged");
         } catch (Exception e) {
             logged = false;
         }
-//        Optional<Boolean> auth = Optional.of(false);
         List<String> auth = null;
         boolean admin = false;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,13 +69,11 @@ public class IndexServiceImpl implements IndexService {
 //            System.out.println(auth.contains("ROLE_ADMIN"));
             admin = auth.contains("ROLE_ADMIN");
         }
+        String token = UUID.randomUUID().toString();
+        model.addAttribute("token", token);
         model.addAttribute("ifLogged", logged);
-        model.addAttribute("sumPrice", 0);
-        model.addAttribute("cartQuantity", 0);
         model.addAttribute("productList", product);
         model.addAttribute("admin", admin);
-        session.setAttribute("cart", new ArrayList<>());
-        session.setAttribute("tokens", new ArrayList<>());
         session.setAttribute("admin", admin);
     }
     public void setLogOutPage(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart, int sumPrice, int cartQuantity){

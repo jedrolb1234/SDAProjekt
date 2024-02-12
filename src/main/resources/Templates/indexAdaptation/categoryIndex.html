@@ -108,6 +108,7 @@
                     <input type="hidden" name="quantity" id="quantity" th:value="1">
                     <input type="hidden" name="product" id="product" th:value="${pl.id}">
                     <input type="hidden" name="category" id="cat" th:value="${pl.category}">
+                    <input type="hidden" name="token" id="token" th:value="${token}">
                     <button title="Zostaniesz przekierwoany do kategorii produktu." class="addToCartButton">Dodaj</button>
                 </form>
                 <form th:unless="${ifLogged}" class="smallPrice">

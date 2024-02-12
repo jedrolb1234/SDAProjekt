@@ -37,7 +37,7 @@ public class AdaptationController {
     public String searchByNameAndCategory(HttpSession session, Model model, @RequestParam(name = "name") String name,
                                           @RequestParam(name ="category") int category) {
         adaptationService.setMVCByNameAndCategory(session, model, product, cart, cartQuantity, sumPrice, name, category);
-        return "/indexAdaptation/categoryIndex";
+        return "/indexAdaptation/searchByNameAndCategory";
     }
     //ok
     @GetMapping("/adaptation/searchbynameandprice")
@@ -57,7 +57,7 @@ public class AdaptationController {
     public String searchByNameAndPrice(HttpSession session, Model model, @RequestParam(name = "name") String name,
                                        @RequestParam(name = "price") int price, @RequestParam(name ="category") int category){
         adaptationService.setMVCByNameAndPriceAndCategory(session, model, product, cart, cartQuantity, sumPrice, name, price, category);
-        return "/indexAdaptation/searchByName";
+        return "/indexAdaptation/searchByNameAndCategory";
     }
 
 

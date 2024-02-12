@@ -11,7 +11,7 @@
 <body>
 <header>
     <h1 class="logo">Paddington</h1>
-    <form class="searchForm" th:action="@{/shopping/searchbyname}" method="get">
+    <form class="searchForm" th:action="@{/adaptation/searchbyname}" method="get">
         <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
         <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
     </form>
@@ -106,6 +106,7 @@
                                 </select>
                                 <input type="hidden" name="product" th:value="${product.id}" >
                                 <input type="hidden" name="category" id="cat" th:value="${product.category}">
+                                <input type="hidden" name="token" id="token" th:value="${token}">
                                 <button th:if="${ifLogged}" type="submit" class="addToCart">Dodaj</button>
                                 <button th:unlses="${ifLogged}" title="Musisz być zarejestrowany aby dokonać zakupów." th:unless="${ifLogged}" type="reset" class="addToCart">Dodaj</button>
                             </form>

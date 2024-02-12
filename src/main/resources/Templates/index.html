@@ -12,8 +12,10 @@
 <header>
     <h1 class="logo">Paddington</h1>
     <form class="searchForm" th:action="@{/adaptation/searchbyname}" method="get">
-        <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
-        <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
+        <p>
+            <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
+            <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
+        </p>
     </form>
     <form th:if="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logOut}">
         <button  class="logInButton">wyloguj się</button>
@@ -106,7 +108,8 @@
                 <form th:if="${ifLogged}"  class="productButtonSmall" th:action="@{/shopping/addToCart}" method="get">
                     <input type="hidden" name="quantity" id="quantity" th:value="1">
                     <input type="hidden" name="product" id="product" th:value="${pl.id}">
-                    <input type="hidden" name="category" id="cat" th:value="${pl.category}">
+<!--                    <input type="hidden" name="category" id="cat" th:value="${pl.category}">-->
+                    <input type="hidden" name="token" id="token" th:value="${token}">
                     <button title="Zostaniesz przekierwoany do kategorii produktu." class="addToCartButton">Dodaj</button>
                 </form>
                 <form th:unless="${ifLogged}" class="smallPrice">
@@ -167,7 +170,7 @@
         margin-right: 100px;
         width: 450px; !important
         padding 0;
-        box-sizing: border-box;
+        /*box-sizing: border-box;*/
     }
 
     .searchInput {
@@ -177,7 +180,7 @@
         font-size: 18px;
         /*padding-left: 10px;*/
         border-radius:  10px 0 0 10px;
-        margin: 0 0 0 0;
+        margin: 0 0 0;
         box-sizing: border-box;
     }
 

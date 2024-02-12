@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class ProductDetailServiceImpl implements ProductDetailService {
 
@@ -70,22 +72,26 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
 
     public void setAddToCartMVC(HttpSession session, Model model, List<ProductEntity> product, List<ShoppingCart> cart,
-                                     int quantity, int id){
+                                     int quantity, int id, String token){
+        List<String> tokens = (List<String>)session.getAttribute("tokens");
+        if(tokens == null)
+            tokens = new ArrayList<>();
         cart = (List<ShoppingCart>) session.getAttribute("cart");
-        boolean logged;
-        try {
-            logged = (boolean) session.getAttribute("logged");
-        }catch(Exception e){
-            logged = false;
-        }
-        model.addAttribute("ifLogged", logged);
 
-            if (cart == null) {
+        if (cart == null) {
             cart = new ArrayList<>();}
+
         ShoppingCart productWithQuantity = new ShoppingCart();
-            productWithQuantity.setQuantity(quantity);
-            productWithQuantity.setProduct(id);
+        productWithQuantity.setQuantity(quantity);
+        productWithQuantity.setProduct(id);
+        if(!tokens.contains(token)){
+            System.out.println("tokens \n"+ token);
+            tokens.add(token);
+            session.setAttribute("tokens", tokens);
+            token = UUID.randomUUID().toString();
+            model.addAttribute("token", token);
             cart.add(productWithQuantity);
+        }
         cartQuantity = 0;
         sumPrice = 0;
         if(cart != null) {
@@ -106,12 +112,19 @@ public class ProductDetailServiceImpl implements ProductDetailService {
             model.addAttribute("cart", cart);
         }
         session.setAttribute("cart", cart);
+        boolean logged;
+        try {
+            logged = (boolean) session.getAttribute("logged");
+        }catch(Exception e){
+            logged = false;
+        }
         boolean admin;
         try {
             admin = (boolean) session.getAttribute("admin");
         }catch(Exception e){
             admin = false;
         }
+        model.addAttribute("ifLogged", logged);
         model.addAttribute("admin", admin);
     }
 
