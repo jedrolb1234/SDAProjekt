@@ -12,8 +12,10 @@
 <header>
     <h1 class="logo">Paddington</h1>
     <form class="searchForm" th:action="@{/admin/searchbyname}" method="get">
-        <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
-        <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
+        <div class="searchContainer">
+            <input type="text" class="searchInput" placeholder="Szukaj" name="name" id="name" th:value="${name}">
+            <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
+        </div>
     </form>
     <form th:if="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logOut}">
         <button  class="logInButton">wyloguj się</button>
@@ -124,30 +126,46 @@
     }
 
     .searchForm {
-        margin-left: 150px;
-        margin-right: 0;
-        width: 550px;
+        margin-left: 50px;
+        margin-right: 100px;
+        width: 450px; /*!important*/
+        padding: 0;
+        /*box-sizing: border-box;*/
     }
-
+    .searchContainer {
+        display: flex;
+        margin: 15px 0 0 0;
+    }
     .searchInput {
         width: 340px;
         height: 50px;
         padding-right: 10px;
         font-size: 18px;
-        /*padding-left: 10px;*/
+        padding-left: 10px;
         border-radius:  10px 0 0 10px;
-        margin: 0 0 0 0;
+        margin: -5px 0 0 0;
+        border-width: 2px 0 2px 2px;
+        box-sizing: border-box;
     }
 
     .searchButton {
         width: 50px;
-        height: 55px;
-        margin: 6px 0 0 -5px;
+        height: 50px;
+        margin: -5px 0 0 -5px;
         border-radius: 0 10px 10px 0;
-        border-width: 2px;
+        border-width: 2px 2px 2px 0;
         padding: 0;
+        box-sizing: border-box;
+        justify-items: center;
+        background-color: white;
     }
-
+    .searchButton:hover{
+        cursor: pointer;
+    }
+    i{
+        width:24px;
+        height:24px;
+    }
 
     .ownerInfo {
         padding-top: 20px;
