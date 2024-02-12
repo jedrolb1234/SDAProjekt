@@ -17,12 +17,13 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest
 public class ProductRepositoryTest {
     ProductEntity product;
     @Autowired
     private AppRepository repository;
+
     @BeforeEach
     public void setProduct() {
 
@@ -44,67 +45,77 @@ public class ProductRepositoryTest {
         pictures.add(picture);
         product.setPicture(pictures);
     }
-    @Test
-    void assertThatReturnFullListOfProducts(){
-        List<ProductEntity> products = repository.findAll();
 
-        Assertions.assertEquals(products.size(), 51);
-    }
     @Test
-    void assertInsertionToDB(){
+    void assertThatReturnFullListOfProducts() {
+        //given
+        repository.save(product);
+        //when
+        List<ProductEntity> products = repository.findAll();
+        //then
+        Assertions.assertEquals(products.size(), 1);
+    }
+
+    @Test
+    void assertInsertionToDB() {
         repository.save(product);
         List<ProductEntity> products = repository.findAll();
         Assertions.assertEquals(products.size(), 52);
     }
 
     @Test
-    void assertNumberOfPicturesIsTrue(){
-    repository.save(product);
-    List<ProductEntity> products = repository.findProductsByName(product.getName());
-    Assertions.assertEquals(products.get(0).getPicture().size(), 1);
+    void assertNumberOfPicturesIsTrue() {
+        repository.save(product);
+        List<ProductEntity> products = repository.findProductsByName(product.getName());
+        Assertions.assertEquals(products.get(0).getPicture().size(), 1);
     }
 
     @Test
-    void checkPriceLessThanGiven(){
+    void checkPriceLessThanGiven() {
         List<ProductEntity> products = repository.findProductsByPrice(50);
         List<ProductEntity> productLesThan50 = products.stream().filter(p -> p.getPrice() <= 50).collect(Collectors.toList());
         Assertions.assertEquals(products.size(), productLesThan50.size());
-    }    @Test
-    void checkProductsWithCategory(){
+    }
+
+    @Test
+    void checkProductsWithCategory() {
         List<ProductEntity> products = repository.findProductsByCategory(1);
         List<ProductEntity> productsFromDB = repository.findAll();
         List<ProductEntity> productCat1 = productsFromDB.stream().filter(p -> p.getCategory() == 1).collect(Collectors.toList());
         Assertions.assertEquals(products.size(), productCat1.size());
     }
+
     @Test
-    void checkProductWithPriceAndCategory(){
+    void checkProductWithPriceAndCategory() {
         List<ProductEntity> products = repository.findProductsByPriceAndCategory(50, 1);
         List<ProductEntity> productsFromDB = repository.findAll();
         List<ProductEntity> productCat1 = productsFromDB.stream().filter(p -> p.getCategory() == 1 && p.getPrice() <= 50).collect(Collectors.toList());
         Assertions.assertEquals(products.size(), productCat1.size());
     }
+
     @Test
-    void checkProductsWithNameAndPrice(){
+    void checkProductsWithNameAndPrice() {
         List<ProductEntity> products = repository.findProductsByNameAndPrice("lalka", 80);
         List<ProductEntity> productsFromDB = repository.findAll();
         List<ProductEntity> productCat1 = productsFromDB.stream().filter(p -> p.getName().contains("Lalka") && p.getPrice() <= 80).collect(Collectors.toList());
         Assertions.assertEquals(products.size(), productCat1.size());
     }
+
     @Test
-    void checkProductsWithNameAndCategory(){
+    void checkProductsWithNameAndCategory() {
         List<ProductEntity> products = repository.findProductsByNameAndCategory("lalka", 3);
         List<ProductEntity> productsFromDB = repository.findAll();
         List<ProductEntity> productCat1 = productsFromDB.stream().filter(p -> p.getName().contains("Lalka") && p.getCategory() == 3).collect(Collectors.toList());
         Assertions.assertEquals(products.size(), productCat1.size());
     }
+
     @Test
-    void checkProductsWithNamePriceAndAndCategory(){
-        List<ProductEntity> products = repository.findProductsByNameAndPriceAndCategory("lalka",100 ,3);
+    void checkProductsWithNamePriceAndAndCategory() {
+        List<ProductEntity> products = repository.findProductsByNameAndPriceAndCategory("lalka", 100, 3);
         List<ProductEntity> productsFromDB = repository.findAll();
-        List<ProductEntity> productCat1 = productsFromDB.stream().filter(p -> p.getName().contains("Lalka") && p.getCategory() == 3 &&p.getPrice() <= 100).collect(Collectors.toList());
+        List<ProductEntity> productCat1 = productsFromDB.stream().filter(p -> p.getName().contains("Lalka") && p.getCategory() == 3 && p.getPrice() <= 100).collect(Collectors.toList());
         Assertions.assertEquals(products.size(), productCat1.size());
     }
-
 
 
 }

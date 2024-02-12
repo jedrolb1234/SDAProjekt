@@ -12,8 +12,6 @@ public interface AppRepository extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> findAll();
     @Query("SELECT e FROM ProductEntity e WHERE e.id = :product")
     Optional<ProductEntity> getProductByProductId(long product);
-//    @Query(value = "select e from ProductEntity e where e.name = :name")
-//    Optional<ProductEntity> findByName(String name);
     @Query("SELECT e FROM ProductEntity e WHERE e.price <= :price")
     List<ProductEntity> findProductsByPrice(int price);
     @Query("SELECT e FROM ProductEntity e WHERE e.category = :category")

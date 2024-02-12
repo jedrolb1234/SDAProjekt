@@ -69,8 +69,8 @@ public class UserController {
 //        return "/userInfo";
 //    }
 
-    @GetMapping("/user/logOut")
-    String logOutPage(HttpSession session, Model model){
+    @PostMapping("/user/logout")
+    String logoutPage(HttpSession session, Model model){
         userService.setIndexMVC(session, model);
         return "/index";
     }

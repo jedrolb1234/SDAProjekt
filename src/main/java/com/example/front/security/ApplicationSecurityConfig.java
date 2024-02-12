@@ -21,7 +21,7 @@ import static com.example.front.security.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // dzięki temu działają adnotacje nad endpointami
+//@EnableGlobalMethodSecurity(prePostEnabled = true) // dzięki temu działają adnotacje nad endpointami
 class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -38,14 +38,15 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests() // deklarujemy że zadania muszą byc autoryzowane
-                    .antMatchers("/shopping/addToCart", "/basket")
-                        .hasAnyRole(CLIENT.name(), ADMIN.name())
-                    .antMatchers( "/admin**")
-                        .hasRole(ADMIN.name())
                     .antMatchers("/", "/index","/user**", "/account**",
                             "/shopping/**","/productDetail/**","/Img/Obrazy/**",
                             "/returnToShopping","adaptation**") // część naszej białej listy
                     .permitAll()// kolejna część białej listy
+        //"/shopping/** to poprawić bo będzie dostęp
+                .antMatchers("/shopping/addToCart", "/basket")
+                    .hasAnyRole(CLIENT.name(), ADMIN.name())
+                .antMatchers("/admin")
+                    .hasRole(ADMIN.name())
                 .and()
                 .formLogin()
                     .loginPage("/user/validateUser")
@@ -62,13 +63,13 @@ class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .logout()
                     .logoutUrl("/user/logOut")
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID", "remember-me")
                     .logoutSuccessUrl("/login")
                 .and()
-                    .exceptionHandling()//.accessDeniedPage("/account/register");
+                    .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler());
     }
 

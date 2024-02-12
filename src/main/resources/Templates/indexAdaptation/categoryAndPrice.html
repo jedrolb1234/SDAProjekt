@@ -18,7 +18,7 @@
             <button type="submit" class="searchButton"><i class="material-icons">search</i></button>
         </div>
     </form>
-    <form th:if="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logOut}">
+    <form th:if="${ifLogged}" class="logFormButton" method="post" th:action="@{/user/logout}">
         <button  class="logInButton">wyloguj się</button>
     </form>
     <form th:unless="${ifLogged}" class="logFormButton" method="get" th:action="@{/user/logIn}">
